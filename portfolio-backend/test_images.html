@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Image Test</title>
+    <style>
+        body { font-family: Arial, sans-serif; padding: 20px; }
+        .test-section { margin: 30px 0; padding: 20px; border: 2px solid #ccc; }
+        img { max-width: 300px; border: 2px solid #1B4332; }
+        .error { color: red; }
+        .success { color: green; }
+    </style>
+</head>
+<body>
+    <h1>Image Loading Test</h1>
+    
+    <div class="test-section">
+        <h2>Education Logo Test</h2>
+        <p>URL: <code>http://localhost:8000/media/education/logos/ashesi_logo.png</code></p>
+        <img 
+            src="http://localhost:8000/media/education/logos/ashesi_logo.png" 
+            alt="Ashesi Logo"
+            onload="document.getElementById('edu-status').innerHTML = 'SUCCESS: Image loaded!'; document.getElementById('edu-status').className = 'success';"
+            onerror="document.getElementById('edu-status').innerHTML = 'ERROR: Failed to load image'; document.getElementById('edu-status').className = 'error';"
+        />
+        <p id="edu-status">Loading...</p>
+    </div>
+    
+    <div class="test-section">
+        <h2>Project Image Test 1</h2>
+        <p>URL: <code>http://localhost:8000/media/projects/ChatGPT_Image_Apr_20_2026_10_51_55_PM.png</code></p>
+        <img 
+            src="http://localhost:8000/media/projects/ChatGPT_Image_Apr_20_2026_10_51_55_PM.png" 
+            alt="Project 1"
+            onload="document.getElementById('proj1-status').innerHTML = 'SUCCESS: Image loaded!'; document.getElementById('proj1-status').className = 'success';"
+            onerror="document.getElementById('proj1-status').innerHTML = 'ERROR: Failed to load image'; document.getElementById('proj1-status').className = 'error';"
+        />
+        <p id="proj1-status">Loading...</p>
+    </div>
+    
+    <div class="test-section">
+        <h2>Project Image Test 2</h2>
+        <p>URL: <code>http://localhost:8000/media/projects/ChatGPT_Image_Apr_20_2026_11_01_22_PM.png</code></p>
+        <img 
+            src="http://localhost:8000/media/projects/ChatGPT_Image_Apr_20_2026_11_01_22_PM.png" 
+            alt="Project 2"
+            onload="document.getElementById('proj2-status').innerHTML = 'SUCCESS: Image loaded!'; document.getElementById('proj2-status').className = 'success';"
+            onerror="document.getElementById('proj2-status').innerHTML = 'ERROR: Failed to load image'; document.getElementById('proj2-status').className = 'error';"
+        />
+        <p id="proj2-status">Loading...</p>
+    </div>
+    
+    <script>
+        // Test API fetch
+        fetch('http://localhost:8000/api/education/')
+            .then(res => res.json())
+            .then(data => {
+                console.log('Education API:', data);
+                document.getElementById('api-test').innerHTML = 'API Response: ' + JSON.stringify(data, null, 2);
+            })
+            .catch(err => {
+                console.error('API Error:', err);
+                document.getElementById('api-test').innerHTML = 'API Error: ' + err.message;
+                document.getElementById('api-test').className = 'error';
+            });
+    </script>
+    
+    <div class="test-section">
+        <h2>API Test</h2>
+        <pre id="api-test">Loading API...</pre>
+    </div>
+</body>
+</html>
