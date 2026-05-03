@@ -126,10 +126,11 @@ if USE_R2_STORAGE:
     # Set MEDIA_URL based on custom domain or default R2 URL
     if AWS_S3_CUSTOM_DOMAIN:
         # Custom domain should NOT include https:// in the variable
-        MEDIA_URL = f'https://{AWS_S3_CUSTOM_DOMAIN}/media/'
+        # Include bucket name in the path
+        MEDIA_URL = f'https://{AWS_S3_CUSTOM_DOMAIN}/{AWS_STORAGE_BUCKET_NAME}/media/'
     else:
-        # Use default R2 public URL (without https:// prefix in variable)
-        MEDIA_URL = f'https://{AWS_S3_CUSTOM_DOMAIN}/media/' if AWS_S3_CUSTOM_DOMAIN else f'{AWS_S3_ENDPOINT_URL}/{AWS_STORAGE_BUCKET_NAME}/media/'
+        # Use default R2 endpoint URL
+        MEDIA_URL = f'{AWS_S3_ENDPOINT_URL}/{AWS_STORAGE_BUCKET_NAME}/media/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
