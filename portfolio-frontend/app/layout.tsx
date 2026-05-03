@@ -34,7 +34,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={`${syne.variable} ${dmSans.variable} font-sans antialiased`}>
+      <body className={`${syne.variable} ${dmSans.variable} font-sans antialiased`} suppressHydrationWarning>
         <NetworkBackground />
         <div style={{ width: '100%', overflowX: 'hidden', position: 'relative', zIndex: 1 }}>
           <Navbar />

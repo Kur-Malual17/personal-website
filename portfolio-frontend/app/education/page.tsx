@@ -80,12 +80,12 @@ export default function EducationPage() {
             backgroundColor: '#E8F5E9',
             borderRadius: '30px',
             marginBottom: '16px',
-            border: '1px solid #1B4332'
+            border: '1px solid #0066CC'
           }}>
             <span style={{ 
               fontSize: 'clamp(0.75rem, 2vw, 0.875rem)', 
               fontWeight: isDark ? '800' : '600',
-              color: '#1B4332',
+              color: '#0066CC',
               textTransform: 'uppercase',
               letterSpacing: '1px'
             }}>
@@ -147,7 +147,7 @@ export default function EducationPage() {
                   flexWrap: 'wrap'
                 }}
                 onMouseEnter={(e) => {
-                  e.currentTarget.style.borderColor = '#1B4332';
+                  e.currentTarget.style.borderColor = '#0066CC';
                   e.currentTarget.style.transform = 'translateX(8px)';
                 }}
                 onMouseLeave={(e) => {
@@ -160,7 +160,7 @@ export default function EducationPage() {
                   <h3 style={{ fontSize: 'clamp(1.25rem, 3.5vw, 1.375rem)', fontWeight: '700', marginBottom: '6px', color: isDark ? '#FFFFFF' : '#1A1A1A' }}>
                     {edu.institution}
                   </h3>
-                  <p style={{ fontSize: 'clamp(1rem, 2.5vw, 1.0625rem)', fontWeight: isDark ? '700' : '600', color: '#1B4332', marginBottom: '6px' }}>
+                  <p style={{ fontSize: 'clamp(1rem, 2.5vw, 1.0625rem)', fontWeight: '700', color: '#0066CC', marginBottom: '6px' }}>
                     {edu.degree}
                   </p>
                   <p style={{ fontSize: '0.875rem', color: '#6B7280', marginBottom: '8px' }}>
@@ -174,7 +174,7 @@ export default function EducationPage() {
                       borderRadius: '6px',
                       fontSize: '0.875rem',
                       fontWeight: '600',
-                      color: '#1B4332',
+                      color: '#0066CC',
                       marginTop: '6px',
                       marginBottom: '12px'
                     }}>
@@ -189,7 +189,7 @@ export default function EducationPage() {
                         fontSize: '0.75rem', 
                         fontWeight: '700', 
                         marginBottom: '10px',
-                        color: '#1A1A1A',
+                        color: '#0066CC',
                         textTransform: 'uppercase',
                         letterSpacing: '0.5px'
                       }}>
@@ -203,10 +203,10 @@ export default function EducationPage() {
                               padding: '6px 12px',
                               fontSize: '0.8125rem',
                               backgroundColor: '#E8F5E9',
-                              color: '#1B4332',
+                              color: '#0066CC',
                               borderRadius: '6px',
                               fontWeight: '600',
-                              border: '1px solid #1B433220'
+                              border: '1px solid #0066CC20'
                             }}
                           >
                             {course}
@@ -256,3 +256,4 @@ export default function EducationPage() {
     </main>
   );
 }
+

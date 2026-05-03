@@ -24,7 +24,7 @@ export default function Footer() {
               fontSize: 'clamp(1.125rem, 2.5vw, 1.375rem)', 
               fontWeight: '700', 
               marginBottom: '10px',
-              background: 'linear-gradient(135deg, #1B4332 0%, #2D6A4F 100%)',
+              background: 'linear-gradient(135deg, #0066CC 0%, #0052A3 100%)',
               WebkitBackgroundClip: 'text',
               WebkitTextFillColor: 'transparent',
               backgroundClip: 'text'
@@ -55,7 +55,7 @@ export default function Footer() {
                   transition: 'color 0.3s',
                   textDecoration: 'none'
                 }}
-                onMouseOver={(e) => e.currentTarget.style.color = '#2D6A4F'}
+                onMouseOver={(e) => e.currentTarget.style.color = '#0052A3'}
                 onMouseOut={(e) => e.currentTarget.style.color = '#B0BEC5'}
               >
                 About
@@ -68,7 +68,7 @@ export default function Footer() {
                   transition: 'color 0.3s',
                   textDecoration: 'none'
                 }}
-                onMouseOver={(e) => e.currentTarget.style.color = '#2D6A4F'}
+                onMouseOver={(e) => e.currentTarget.style.color = '#0052A3'}
                 onMouseOut={(e) => e.currentTarget.style.color = '#B0BEC5'}
               >
                 Experience
@@ -81,7 +81,7 @@ export default function Footer() {
                   transition: 'color 0.3s',
                   textDecoration: 'none'
                 }}
-                onMouseOver={(e) => e.currentTarget.style.color = '#2D6A4F'}
+                onMouseOver={(e) => e.currentTarget.style.color = '#0052A3'}
                 onMouseOut={(e) => e.currentTarget.style.color = '#B0BEC5'}
               >
                 Projects
@@ -94,7 +94,7 @@ export default function Footer() {
                   transition: 'color 0.3s',
                   textDecoration: 'none'
                 }}
-                onMouseOver={(e) => e.currentTarget.style.color = '#2D6A4F'}
+                onMouseOver={(e) => e.currentTarget.style.color = '#0052A3'}
                 onMouseOut={(e) => e.currentTarget.style.color = '#B0BEC5'}
               >
                 Skills
@@ -107,7 +107,7 @@ export default function Footer() {
                   transition: 'color 0.3s',
                   textDecoration: 'none'
                 }}
-                onMouseOver={(e) => e.currentTarget.style.color = '#2D6A4F'}
+                onMouseOver={(e) => e.currentTarget.style.color = '#0052A3'}
                 onMouseOut={(e) => e.currentTarget.style.color = '#B0BEC5'}
               >
                 Education
@@ -120,7 +120,7 @@ export default function Footer() {
                   transition: 'color 0.3s',
                   textDecoration: 'none'
                 }}
-                onMouseOver={(e) => e.currentTarget.style.color = '#2D6A4F'}
+                onMouseOver={(e) => e.currentTarget.style.color = '#0052A3'}
                 onMouseOut={(e) => e.currentTarget.style.color = '#B0BEC5'}
               >
                 Contact
@@ -148,7 +148,7 @@ export default function Footer() {
                   fontSize: 'clamp(0.8125rem, 2vw, 0.875rem)',
                   transition: 'color 0.3s'
                 }}
-                onMouseOver={(e) => e.currentTarget.style.color = '#2D6A4F'}
+                onMouseOver={(e) => e.currentTarget.style.color = '#0052A3'}
                 onMouseOut={(e) => e.currentTarget.style.color = '#B0BEC5'}
               >
                 GitHub
@@ -162,7 +162,7 @@ export default function Footer() {
                   fontSize: 'clamp(0.8125rem, 2vw, 0.875rem)',
                   transition: 'color 0.3s'
                 }}
-                onMouseOver={(e) => e.currentTarget.style.color = '#2D6A4F'}
+                onMouseOver={(e) => e.currentTarget.style.color = '#0052A3'}
                 onMouseOut={(e) => e.currentTarget.style.color = '#B0BEC5'}
               >
                 LinkedIn
@@ -174,7 +174,7 @@ export default function Footer() {
                   fontSize: 'clamp(0.8125rem, 2vw, 0.875rem)',
                   transition: 'color 0.3s'
                 }}
-                onMouseOver={(e) => e.currentTarget.style.color = '#2D6A4F'}
+                onMouseOver={(e) => e.currentTarget.style.color = '#0052A3'}
                 onMouseOut={(e) => e.currentTarget.style.color = '#B0BEC5'}
               >
                 Email
@@ -206,18 +206,14 @@ export default function Footer() {
           display: 'flex',
           justifyContent: 'center',
           alignItems: 'center',
-          flexDirection: 'column',
-          gap: '8px',
           textAlign: 'center'
         }}>
           <p style={{ color: '#B0BEC5', fontSize: 'clamp(0.75rem, 2vw, 0.875rem)', margin: 0 }}>
             © {new Date().getFullYear()} Kur Malual. All rights reserved.
-          </p>
-          <p style={{ color: '#B0BEC5', fontSize: 'clamp(0.75rem, 2vw, 0.875rem)', margin: 0 }}>
-            Built with Next.js & Django
           </p>
         </div>
       </div>
     </footer>
   );
 }
+

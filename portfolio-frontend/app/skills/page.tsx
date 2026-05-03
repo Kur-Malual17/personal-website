@@ -108,13 +108,13 @@ export default function SkillsPage() {
             <div
               key={index}
               style={{
-                backgroundColor: 'rgba(255, 255, 255, 0.8)',
+                backgroundColor: 'rgba(255, 255, 255, 0.95)',
                 backdropFilter: 'blur(10px)',
                 borderRadius: '16px',
                 padding: 'clamp(24px, 5vw, 40px) clamp(20px, 4vw, 32px)',
-                boxShadow: '0 1px 3px rgba(0, 0, 0, 0.05), 0 10px 40px rgba(0, 0, 0, 0.03)',
+                boxShadow: isDark ? '0 4px 12px rgba(0, 0, 0, 0.3)' : '0 1px 3px rgba(0, 0, 0, 0.05), 0 10px 40px rgba(0, 0, 0, 0.03)',
                 transition: 'all 0.4s cubic-bezier(0.4, 0, 0.2, 1)',
-                border: '2px solid rgba(243, 244, 246, 0.6)',
+                border: isDark ? '2px solid rgba(200, 200, 200, 0.3)' : '2px solid rgba(243, 244, 246, 0.6)',
                 position: 'relative',
                 overflow: 'hidden'
               }}
@@ -125,8 +125,8 @@ export default function SkillsPage() {
               }}
               onMouseOut={(e) => {
                 e.currentTarget.style.transform = 'translateY(0)';
-                e.currentTarget.style.boxShadow = '0 1px 3px rgba(0, 0, 0, 0.05), 0 10px 40px rgba(0, 0, 0, 0.03)';
-                e.currentTarget.style.borderColor = '#F3F4F6';
+                e.currentTarget.style.boxShadow = isDark ? '0 4px 12px rgba(0, 0, 0, 0.3)' : '0 1px 3px rgba(0, 0, 0, 0.05), 0 10px 40px rgba(0, 0, 0, 0.03)';
+                e.currentTarget.style.borderColor = isDark ? 'rgba(200, 200, 200, 0.3)' : '#F3F4F6';
               }}
             >
               {/* Decorative gradient bar */}
@@ -144,7 +144,7 @@ export default function SkillsPage() {
                 fontSize: 'clamp(1.125rem, 2.5vw, 1.5rem)', 
                 fontWeight: '700', 
                 marginBottom: 'clamp(16px, 3vw, 24px)',
-                color: isDark ? '#FFFFFF' : '#000000',
+                color: '#000000',
                 letterSpacing: '-0.01em',
                 marginTop: '8px'
               }}>
@@ -160,9 +160,9 @@ export default function SkillsPage() {
                       padding: '8px 16px',
                       fontSize: '0.875rem',
                       backgroundColor: '#F8FAFB',
-                      color: isDark ? '#FFFFFF' : '#1A1A1A',
+                      color: '#1A1A1A',
                       borderRadius: '8px',
-                      fontWeight: isDark ? '700' : '600',
+                      fontWeight: '600',
                       transition: 'all 0.3s ease',
                       border: '1px solid #E5E7EB'
                     }}
@@ -274,3 +274,4 @@ export default function SkillsPage() {
     </main>
   );
 }
+

@@ -128,13 +128,13 @@ export default function ProjectsPage() {
                 <div
                   key={project.id || project.slug}
                   style={{
-                    backgroundColor: 'rgba(255, 255, 255, 0.8)',
+                    backgroundColor: 'rgba(255, 255, 255, 0.95)',
                     backdropFilter: 'blur(10px)',
                     borderRadius: '16px',
                     overflow: 'hidden',
-                    boxShadow: '0 1px 3px rgba(0, 0, 0, 0.05), 0 10px 40px rgba(0, 0, 0, 0.03)',
+                    boxShadow: isDark ? '0 4px 12px rgba(0, 0, 0, 0.3)' : '0 1px 3px rgba(0, 0, 0, 0.05), 0 10px 40px rgba(0, 0, 0, 0.03)',
                     transition: 'all 0.4s cubic-bezier(0.4, 0, 0.2, 1)',
-                    border: '2px solid rgba(243, 244, 246, 0.6)',
+                    border: isDark ? '2px solid rgba(200, 200, 200, 0.3)' : '2px solid rgba(243, 244, 246, 0.6)',
                     display: 'flex',
                     flexDirection: 'column',
                     height: '100%'
@@ -146,8 +146,8 @@ export default function ProjectsPage() {
                   }}
                   onMouseLeave={(e) => {
                     e.currentTarget.style.transform = 'translateY(0)';
-                    e.currentTarget.style.boxShadow = '0 1px 3px rgba(0, 0, 0, 0.05), 0 10px 40px rgba(0, 0, 0, 0.03)';
-                    e.currentTarget.style.borderColor = '#F3F4F6';
+                    e.currentTarget.style.boxShadow = isDark ? '0 4px 12px rgba(0, 0, 0, 0.3)' : '0 1px 3px rgba(0, 0, 0, 0.05), 0 10px 40px rgba(0, 0, 0, 0.03)';
+                    e.currentTarget.style.borderColor = isDark ? 'rgba(200, 200, 200, 0.3)' : '#F3F4F6';
                   }}
                 >
                   {/* Project Image - Always show image area */}
@@ -215,7 +215,7 @@ export default function ProjectsPage() {
                       fontSize: 'clamp(1rem, 2.5vw, 1.25rem)', 
                       fontWeight: '800', 
                       marginBottom: '12px',
-                      color: isDark ? '#FFFFFF' : '#000000',
+                      color: '#000000',
                       lineHeight: '1.3',
                       letterSpacing: '-0.01em'
                     }}>
@@ -224,11 +224,11 @@ export default function ProjectsPage() {
                     
                     <p style={{ 
                       fontSize: 'clamp(0.875rem, 2vw, 0.9375rem)', 
-                      color: isDark ? '#FFFFFF' : '#6B7280',
+                      color: '#4A5568',
                       marginBottom: '16px',
                       lineHeight: '1.7',
                       flex: 1,
-                      fontWeight: isDark ? '600' : '400'
+                      fontWeight: '400'
                     }}>
                       {project.description}
                     </p>
@@ -355,3 +355,4 @@ export default function ProjectsPage() {
     </main>
   );
 }
+

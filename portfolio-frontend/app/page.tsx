@@ -5,6 +5,56 @@ import { useState, useEffect } from 'react';
 import { fetchProjects } from '@/lib/api';
 import { Project } from '@/types/project';
 
+// Typewriter animation component
+function TypewriterText() {
+  const [text, setText] = useState('');
+  const [isDeleting, setIsDeleting] = useState(false);
+  const [loopNum, setLoopNum] = useState(0);
+  const [typingSpeed, setTypingSpeed] = useState(150);
+
+  const roles = [
+    'Junior Software Engineer',
+    'Full-Stack Developer',
+    'Mobile App Developer',
+    'UI/UX Designer'
+  ];
+
+  useEffect(() => {
+    const handleType = () => {
+      const i = loopNum % roles.length;
+      const fullText = roles[i];
+
+      setText(
+        isDeleting
+          ? fullText.substring(0, text.length - 1)
+          : fullText.substring(0, text.length + 1)
+      );
+
+      setTypingSpeed(isDeleting ? 50 : 150);
+
+      if (!isDeleting && text === fullText) {
+        setTimeout(() => setIsDeleting(true), 2000);
+      } else if (isDeleting && text === '') {
+        setIsDeleting(false);
+        setLoopNum(loopNum + 1);
+      }
+    };
+
+    const timer = setTimeout(handleType, typingSpeed);
+    return () => clearTimeout(timer);
+  }, [text, isDeleting, loopNum, typingSpeed, roles]);
+
+  return (
+    <span>
+      {text}
+      <span style={{ 
+        animation: 'blink 1s infinite',
+        marginLeft: '2px'
+      }}>|</span>
+    </span>
+  );
+}
+
 // Custom hook to detect dark mode
 function useDarkMode() {
   const [isDark, setIsDark] = useState(false);
@@ -58,6 +108,13 @@ export default function HomePage() {
   const [profile, setProfile] = useState<Profile | null>(null);
   const [education, setEducation] = useState<any[]>([]);
   const [experience, setExperience] = useState<any[]>([]);
+  
+  // Animated counter states
+  const [projectsCount, setProjectsCount] = useState(0);
+  const [schoolsCount, setSchoolsCount] = useState(0);
+  const [efficiencyCount, setEfficiencyCount] = useState(0);
+  const [degreesCount, setDegreesCount] = useState(0);
+  const [hasAnimated, setHasAnimated] = useState(false);
 
   useEffect(() => {
     async function loadData() {
@@ -108,6 +165,45 @@ export default function HomePage() {
     loadData();
   }, []);
 
+  // Animated counter effect
+  useEffect(() => {
+    if (hasAnimated) return;
+
+    const duration = 2000; // 2 seconds
+    const steps = 60;
+    const interval = duration / steps;
+
+    const targets = {
+      projects: 7,
+      schools: 3,
+      efficiency: 40,
+      degrees: 2
+    };
+
+    let currentStep = 0;
+
+    const timer = setInterval(() => {
+      currentStep++;
+      const progress = currentStep / steps;
+
+      setProjectsCount(Math.floor(targets.projects * progress));
+      setSchoolsCount(Math.floor(targets.schools * progress));
+      setEfficiencyCount(Math.floor(targets.efficiency * progress));
+      setDegreesCount(Math.floor(targets.degrees * progress));
+
+      if (currentStep >= steps) {
+        setProjectsCount(targets.projects);
+        setSchoolsCount(targets.schools);
+        setEfficiencyCount(targets.efficiency);
+        setDegreesCount(targets.degrees);
+        setHasAnimated(true);
+        clearInterval(timer);
+      }
+    }, interval);
+
+    return () => clearInterval(timer);
+  }, [hasAnimated]);
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setStatus('loading');
@@ -142,56 +238,62 @@ export default function HomePage() {
       <section id="home" style={{ 
         minHeight: '100vh', 
         display: 'flex', 
-        alignItems: 'center',
-        paddingTop: '80px',
+        alignItems: 'flex-start',
+        paddingTop: '120px',
         paddingLeft: 'clamp(24px, 5vw, 48px)',
         paddingRight: 'clamp(24px, 5vw, 48px)',
         paddingBottom: '40px'
       }}>
         <div className="max-w-7xl mx-auto w-full">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-start">
             {/* Left Content */}
             <div>
-              <div style={{
-                display: 'inline-block',
-                padding: '5px 16px',
-                backgroundColor: '#E8F5E9',
-                borderRadius: '20px',
-                marginBottom: '18px',
-                border: '1px solid #1B4332'
-              }}>
-                <span style={{ 
-                  fontSize: '0.75rem', 
-                  fontWeight: '600',
-                  color: '#1B4332',
-                  textTransform: 'uppercase',
-                  letterSpacing: '0.5px'
-                }}>
-                  Portfolio
-                </span>
-              </div>
-              
               <h1 style={{ 
-                fontSize: 'clamp(2rem, 5vw, 3.25rem)', 
-                fontWeight: '800', 
-                marginBottom: '16px',
+                fontSize: 'clamp(2rem, 6vw, 3.5rem)', 
+                fontWeight: '900', 
+                marginBottom: '8px',
                 color: isDark ? '#FFFFFF' : '#1A1A1A',
-                lineHeight: '1.2',
-                letterSpacing: '-0.01em'
+                lineHeight: '1.1',
+                letterSpacing: '-0.02em',
+                fontFamily: 'system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif'
               }}>
-                Building Digital Systems <span style={{ color: '#1B4332', fontWeight: isDark ? '800' : '700' }}>That Work</span>
+                Hi, I'm <span style={{ color: '#00D9FF' }}>Kur Malual</span>
               </h1>
               
-              <h2 style={{ 
-                fontSize: 'clamp(0.9375rem, 2vw, 1.125rem)', 
-                fontWeight: isDark ? '700' : '500', 
+              <div style={{ 
+                fontSize: 'clamp(1.5rem, 4vw, 2.5rem)', 
+                fontWeight: '700', 
                 marginBottom: '24px',
-                color: isDark ? '#FFFFFF' : '#4A5568',
-                lineHeight: '1.6',
-                maxWidth: '540px'
+                color: '#00D9FF',
+                lineHeight: '1.2',
+                letterSpacing: '-0.01em',
+                fontFamily: 'system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif',
+                minHeight: 'clamp(2.5rem, 5vw, 3.5rem)'
               }}>
-                Full-Stack Software Engineer building scalable platforms for schools, farms, and commerce — with real users from day one.
+                <TypewriterText />
+              </div>
+              
+              <h2 style={{ 
+                fontSize: 'clamp(1.25rem, 3vw, 1.75rem)', 
+                fontWeight: '700', 
+                marginBottom: '24px',
+                color: isDark ? '#FFFFFF' : '#1A1A1A',
+                lineHeight: '1.4',
+                fontFamily: 'system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif'
+              }}>
+                I build <span style={{ color: '#00D9FF' }}>scalable web</span> and <span style={{ color: '#00D9FF' }}>mobile systems</span> with clean design and strong engineering.
               </h2>
+              
+              <p style={{ 
+                fontSize: 'clamp(1rem, 2vw, 1.125rem)', 
+                fontWeight: '400', 
+                marginBottom: '32px',
+                color: isDark ? '#E5E7EB' : '#6B7280',
+                lineHeight: '1.7',
+                maxWidth: '600px'
+              }}>
+                Detail-oriented <strong style={{ color: '#0066CC', fontWeight: '700' }}>Junior Software Engineer</strong> with over <strong style={{ color: '#0066CC', fontWeight: '700' }}>2 years</strong> of hands-on experience in <strong style={{ color: '#0066CC', fontWeight: '700' }}>full-stack development</strong>, <strong style={{ color: '#0066CC', fontWeight: '700' }}>UX/UI design</strong>, and <strong style={{ color: '#0066CC', fontWeight: '700' }}>mobile applications</strong>. I turn complex ideas into high-performance systems that last.
+              </p>
               
               {/* Stats */}
               <div style={{ 
@@ -205,10 +307,10 @@ export default function HomePage() {
                   <div style={{ 
                     fontSize: 'clamp(1.5rem, 3vw, 2.25rem)', 
                     fontWeight: '800', 
-                    color: '#1B4332',
+                    color: '#0066CC',
                     marginBottom: '4px'
                   }}>
-                    7+
+                    {projectsCount}+
                   </div>
                   <div style={{ fontSize: '0.75rem', color: isDark ? '#FFFFFF' : '#6B7280', fontWeight: isDark ? '700' : '600', lineHeight: '1.3' }}>
                     Projects
@@ -218,10 +320,10 @@ export default function HomePage() {
                   <div style={{ 
                     fontSize: 'clamp(1.5rem, 3vw, 2.25rem)', 
                     fontWeight: '800', 
-                    color: '#1B4332',
+                    color: '#0066CC',
                     marginBottom: '4px'
                   }}>
-                    3
+                    {schoolsCount}
                   </div>
                   <div style={{ fontSize: '0.75rem', color: isDark ? '#FFFFFF' : '#6B7280', fontWeight: isDark ? '700' : '600', lineHeight: '1.3' }}>
                     Schools
@@ -231,10 +333,10 @@ export default function HomePage() {
                   <div style={{ 
                     fontSize: 'clamp(1.5rem, 3vw, 2.25rem)', 
                     fontWeight: '800', 
-                    color: '#1B4332',
+                    color: '#0066CC',
                     marginBottom: '4px'
                   }}>
-                    40%
+                    {efficiencyCount}%
                   </div>
                   <div style={{ fontSize: '0.75rem', color: isDark ? '#FFFFFF' : '#6B7280', fontWeight: isDark ? '700' : '600', lineHeight: '1.3' }}>
                     Efficiency
@@ -244,10 +346,10 @@ export default function HomePage() {
                   <div style={{ 
                     fontSize: 'clamp(1.5rem, 3vw, 2.25rem)', 
                     fontWeight: '800', 
-                    color: '#1B4332',
+                    color: '#0066CC',
                     marginBottom: '4px'
                   }}>
-                    2
+                    {degreesCount}
                   </div>
                   <div style={{ fontSize: '0.75rem', color: isDark ? '#FFFFFF' : '#6B7280', fontWeight: isDark ? '700' : '600', lineHeight: '1.3' }}>
                     Degrees
@@ -256,61 +358,232 @@ export default function HomePage() {
               </div>
               
               {/* CTA Buttons */}
-              <div style={{ display: 'flex', gap: '12px', flexWrap: 'wrap' }}>
+              <div style={{ 
+                display: 'flex', 
+                gap: 'clamp(8px, 2vw, 12px)', 
+                flexWrap: 'wrap', 
+                marginBottom: '24px',
+                justifyContent: 'flex-start'
+              }}>
                 <a
-                  href="#contact"
+                  href="mailto:kurmalual@gmail.com"
                   style={{
-                    padding: '12px 24px',
-                    backgroundColor: '#1B4332',
+                    padding: 'clamp(12px, 2.5vw, 14px) clamp(20px, 4vw, 32px)',
+                    background: 'linear-gradient(135deg, #00D9FF 0%, #00A8E8 100%)',
                     color: '#FFFFFF',
-                    borderRadius: '8px',
-                    fontWeight: '600',
-                    fontSize: '0.875rem',
+                    borderRadius: '50px',
+                    fontWeight: '700',
+                    fontSize: 'clamp(0.875rem, 2vw, 1rem)',
                     border: 'none',
                     cursor: 'pointer',
                     transition: 'all 0.3s ease',
-                    boxShadow: '0 3px 12px rgba(27, 67, 50, 0.3)',
+                    boxShadow: '0 10px 30px rgba(0, 217, 255, 0.3)',
                     textDecoration: 'none',
-                    display: 'inline-block'
+                    display: 'inline-block',
+                    whiteSpace: 'nowrap'
                   }}
                   onMouseEnter={(e) => {
-                    e.currentTarget.style.transform = 'translateY(-2px)';
-                    e.currentTarget.style.boxShadow = '0 5px 18px rgba(27, 67, 50, 0.4)';
+                    e.currentTarget.style.transform = 'translateY(-4px)';
+                    e.currentTarget.style.boxShadow = '0 20px 40px rgba(0, 217, 255, 0.4)';
                   }}
                   onMouseLeave={(e) => {
                     e.currentTarget.style.transform = 'translateY(0)';
-                    e.currentTarget.style.boxShadow = '0 3px 12px rgba(27, 67, 50, 0.3)';
+                    e.currentTarget.style.boxShadow = '0 10px 30px rgba(0, 217, 255, 0.3)';
                   }}
                 >
-                  Get In Touch
+                  Hire Me
                 </a>
                 <a
-                  href="#projects"
+                  href="#contact"
                   style={{
-                    padding: '12px 24px',
+                    padding: 'clamp(12px, 2.5vw, 14px) clamp(20px, 4vw, 32px)',
                     backgroundColor: 'transparent',
-                    color: '#1B4332',
-                    borderRadius: '8px',
-                    fontWeight: '600',
-                    fontSize: '0.875rem',
-                    border: '2px solid #1B4332',
+                    color: '#00A8E8',
+                    borderRadius: '50px',
+                    fontWeight: '700',
+                    fontSize: 'clamp(0.875rem, 2vw, 1rem)',
+                    border: '3px solid #00A8E8',
                     cursor: 'pointer',
                     transition: 'all 0.3s ease',
                     textDecoration: 'none',
-                    display: 'inline-block'
+                    display: 'inline-block',
+                    whiteSpace: 'nowrap'
                   }}
                   onMouseEnter={(e) => {
-                    e.currentTarget.style.backgroundColor = '#1B4332';
-                    e.currentTarget.style.color = '#FFFFFF';
-                    e.currentTarget.style.transform = 'translateY(-2px)';
+                    e.currentTarget.style.backgroundColor = 'rgba(0, 168, 232, 0.1)';
+                    e.currentTarget.style.transform = 'translateY(-4px)';
                   }}
                   onMouseLeave={(e) => {
                     e.currentTarget.style.backgroundColor = 'transparent';
-                    e.currentTarget.style.color = '#1B4332';
                     e.currentTarget.style.transform = 'translateY(0)';
                   }}
                 >
-                  View Projects
+                  Let's Talk
+                </a>
+                <a
+                  href="/resume.pdf"
+                  style={{
+                    padding: 'clamp(12px, 2.5vw, 14px) clamp(20px, 4vw, 32px)',
+                    background: 'linear-gradient(135deg, #0066CC 0%, #0052A3 100%)',
+                    color: '#FFFFFF',
+                    borderRadius: '50px',
+                    fontWeight: '700',
+                    fontSize: 'clamp(0.875rem, 2vw, 1rem)',
+                    border: 'none',
+                    cursor: 'pointer',
+                    transition: 'all 0.3s ease',
+                    boxShadow: '0 10px 30px rgba(0, 102, 204, 0.3)',
+                    textDecoration: 'none',
+                    display: 'inline-flex',
+                    alignItems: 'center',
+                    gap: '8px',
+                    whiteSpace: 'nowrap'
+                  }}
+                  onMouseEnter={(e) => {
+                    e.currentTarget.style.transform = 'translateY(-4px)';
+                    e.currentTarget.style.boxShadow = '0 20px 40px rgba(0, 102, 204, 0.4)';
+                  }}
+                  onMouseLeave={(e) => {
+                    e.currentTarget.style.transform = 'translateY(0)';
+                    e.currentTarget.style.boxShadow = '0 10px 30px rgba(0, 102, 204, 0.3)';
+                  }}
+                >
+                  <span style={{ fontSize: 'clamp(1rem, 2.5vw, 1.25rem)' }}>⬇</span> Resume
+                </a>
+              </div>
+
+              {/* Social Media Icons */}
+              <div style={{ display: 'flex', gap: '16px', flexWrap: 'wrap' }}>
+                <a
+                  href="https://facebook.com"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  style={{
+                    width: '50px',
+                    height: '50px',
+                    borderRadius: '50%',
+                    border: '3px solid #00A8E8',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    color: '#00A8E8',
+                    textDecoration: 'none',
+                    transition: 'all 0.3s ease',
+                    backgroundColor: 'transparent'
+                  }}
+                  onMouseOver={(e) => {
+                    e.currentTarget.style.backgroundColor = '#00A8E8';
+                    e.currentTarget.style.color = '#FFFFFF';
+                    e.currentTarget.style.transform = 'translateY(-4px)';
+                  }}
+                  onMouseOut={(e) => {
+                    e.currentTarget.style.backgroundColor = 'transparent';
+                    e.currentTarget.style.color = '#00A8E8';
+                    e.currentTarget.style.transform = 'translateY(0)';
+                  }}
+                >
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
+                  </svg>
+                </a>
+                
+                <a
+                  href="https://twitter.com"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  style={{
+                    width: '50px',
+                    height: '50px',
+                    borderRadius: '50%',
+                    border: '3px solid #00A8E8',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    color: '#00A8E8',
+                    textDecoration: 'none',
+                    transition: 'all 0.3s ease',
+                    backgroundColor: 'transparent'
+                  }}
+                  onMouseOver={(e) => {
+                    e.currentTarget.style.backgroundColor = '#00A8E8';
+                    e.currentTarget.style.color = '#FFFFFF';
+                    e.currentTarget.style.transform = 'translateY(-4px)';
+                  }}
+                  onMouseOut={(e) => {
+                    e.currentTarget.style.backgroundColor = 'transparent';
+                    e.currentTarget.style.color = '#00A8E8';
+                    e.currentTarget.style.transform = 'translateY(0)';
+                  }}
+                >
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M23.953 4.57a10 10 0 01-2.825.775 4.958 4.958 0 002.163-2.723c-.951.555-2.005.959-3.127 1.184a4.92 4.92 0 00-8.384 4.482C7.69 8.095 4.067 6.13 1.64 3.162a4.822 4.822 0 00-.666 2.475c0 1.71.87 3.213 2.188 4.096a4.904 4.904 0 01-2.228-.616v.06a4.923 4.923 0 003.946 4.827 4.996 4.996 0 01-2.212.085 4.936 4.936 0 004.604 3.417 9.867 9.867 0 01-6.102 2.105c-.39 0-.779-.023-1.17-.067a13.995 13.995 0 007.557 2.209c9.053 0 13.998-7.496 13.998-13.985 0-.21 0-.42-.015-.63A9.935 9.935 0 0024 4.59z"/>
+                  </svg>
+                </a>
+                
+                <a
+                  href="https://linkedin.com"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  style={{
+                    width: '50px',
+                    height: '50px',
+                    borderRadius: '50%',
+                    border: '3px solid #00A8E8',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    color: '#00A8E8',
+                    textDecoration: 'none',
+                    transition: 'all 0.3s ease',
+                    backgroundColor: 'transparent'
+                  }}
+                  onMouseOver={(e) => {
+                    e.currentTarget.style.backgroundColor = '#00A8E8';
+                    e.currentTarget.style.color = '#FFFFFF';
+                    e.currentTarget.style.transform = 'translateY(-4px)';
+                  }}
+                  onMouseOut={(e) => {
+                    e.currentTarget.style.backgroundColor = 'transparent';
+                    e.currentTarget.style.color = '#00A8E8';
+                    e.currentTarget.style.transform = 'translateY(0)';
+                  }}
+                >
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
+                  </svg>
+                </a>
+                
+                <a
+                  href="https://github.com"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  style={{
+                    width: '50px',
+                    height: '50px',
+                    borderRadius: '50%',
+                    border: '3px solid #00A8E8',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    color: '#00A8E8',
+                    textDecoration: 'none',
+                    transition: 'all 0.3s ease',
+                    backgroundColor: 'transparent'
+                  }}
+                  onMouseOver={(e) => {
+                    e.currentTarget.style.backgroundColor = '#00A8E8';
+                    e.currentTarget.style.color = '#FFFFFF';
+                    e.currentTarget.style.transform = 'translateY(-4px)';
+                  }}
+                  onMouseOut={(e) => {
+                    e.currentTarget.style.backgroundColor = 'transparent';
+                    e.currentTarget.style.color = '#00A8E8';
+                    e.currentTarget.style.transform = 'translateY(0)';
+                  }}
+                >
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
+                  </svg>
                 </a>
               </div>
             </div>
@@ -338,7 +611,7 @@ export default function HomePage() {
                   width: '100%',
                   height: '100%',
                   borderRadius: '50%',
-                  border: '15px solid rgba(27, 67, 50, 0.15)',
+                  border: '15px solid rgba(0, 102, 204, 0.15)',
                   top: '0',
                   left: '0'
                 }} />
@@ -348,7 +621,7 @@ export default function HomePage() {
                   width: '90%',
                   height: '90%',
                   borderRadius: '50%',
-                  border: '15px solid rgba(27, 67, 50, 0.25)',
+                  border: '15px solid rgba(0, 102, 204, 0.25)',
                   top: '5%',
                   left: '5%'
                 }} />
@@ -361,8 +634,8 @@ export default function HomePage() {
                 height: 'clamp(280px, 38vw, 420px)',
                 borderRadius: '50%',
                 overflow: 'hidden',
-                border: '5px solid #1B4332',
-                boxShadow: '0 12px 40px rgba(27, 67, 50, 0.2)',
+                border: '5px solid #0066CC',
+                boxShadow: '0 12px 40px rgba(0, 102, 204, 0.2)',
                 zIndex: 1
               }}>
                 {profile?.profile_image ? (
@@ -384,7 +657,7 @@ export default function HomePage() {
                   <div style={{
                     width: '100%',
                     height: '100%',
-                    background: 'linear-gradient(135deg, #1B4332 0%, #2D6A4F 100%)',
+                    background: 'linear-gradient(135deg, #0066CC 0%, #0052A3 100%)',
                     display: 'flex',
                     alignItems: 'center',
                     justifyContent: 'center',
@@ -417,7 +690,7 @@ export default function HomePage() {
             </h2>
             <p style={{ 
               fontSize: '1rem', 
-              color: '#1B4332',
+              color: '#0066CC',
               fontWeight: isDark ? '800' : '700',
               letterSpacing: '0.5px'
             }}>
@@ -435,13 +708,13 @@ export default function HomePage() {
             fontWeight: isDark ? '600' : '400'
           }}>
             <p style={{ marginBottom: '24px' }}>
-              I'm a software engineer focused on building <strong style={{ fontWeight: isDark ? '800' : '700' }}>scalable web and mobile systems</strong> that solve real-world problems. My work spans educational technology, agricultural platforms, and enterprise management systems.
+              I'm a software engineer focused on building <strong style={{ color: '#0066CC', fontWeight: '700' }}>scalable web and mobile systems</strong> that solve real-world problems. My work spans educational technology, agricultural platforms, and enterprise management systems.
             </p>
             <p style={{ marginBottom: '24px' }}>
-              Beyond coding, I lead technical initiatives and work on projects aimed at <strong style={{ fontWeight: isDark ? '800' : '700' }}>improving access to technology</strong>, particularly in underserved communities across South Sudan and Ghana.
+              Beyond coding, I lead technical initiatives and work on projects aimed at <strong style={{ color: '#0066CC', fontWeight: '700' }}>improving access to technology</strong>, particularly in underserved communities across South Sudan and Ghana.
             </p>
             <p>
-              I'm driven by building solutions that are not just functional, but <strong style={{ fontWeight: isDark ? '800' : '700' }}>meaningful and long-lasting</strong>.
+              I'm driven by building solutions that are not just functional, but <strong style={{ color: '#0066CC', fontWeight: '700' }}>meaningful and long-lasting</strong>.
             </p>
           </div>
 
@@ -450,7 +723,7 @@ export default function HomePage() {
               href="#projects"
               style={{
                 padding: '12px 28px',
-                backgroundColor: '#1B4332',
+                backgroundColor: '#0066CC',
                 color: '#FFFFFF',
                 borderRadius: '8px',
                 fontWeight: '600',
@@ -458,15 +731,15 @@ export default function HomePage() {
                 textDecoration: 'none',
                 display: 'inline-block',
                 transition: 'all 0.3s ease',
-                boxShadow: '0 3px 12px rgba(27, 67, 50, 0.3)'
+                boxShadow: '0 3px 12px rgba(0, 102, 204, 0.3)'
               }}
               onMouseEnter={(e) => {
                 e.currentTarget.style.transform = 'translateY(-2px)';
-                e.currentTarget.style.boxShadow = '0 5px 18px rgba(27, 67, 50, 0.4)';
+                e.currentTarget.style.boxShadow = '0 5px 18px rgba(0, 102, 204, 0.4)';
               }}
               onMouseLeave={(e) => {
                 e.currentTarget.style.transform = 'translateY(0)';
-                e.currentTarget.style.boxShadow = '0 3px 12px rgba(27, 67, 50, 0.3)';
+                e.currentTarget.style.boxShadow = '0 3px 12px rgba(0, 102, 204, 0.3)';
               }}
             >
               View My Work
@@ -491,7 +764,7 @@ export default function HomePage() {
             </h2>
             <p style={{ 
               fontSize: '1rem', 
-              color: '#1B4332',
+              color: '#0066CC',
               fontWeight: isDark ? '800' : '700',
               letterSpacing: '0.5px'
             }}>
@@ -513,7 +786,7 @@ export default function HomePage() {
                 aspectRatio: '3/4',
                 borderRadius: '24px',
                 overflow: 'hidden',
-                boxShadow: '0 20px 60px rgba(27, 67, 50, 0.15)'
+                boxShadow: '0 20px 60px rgba(0, 102, 204, 0.15)'
               }}>
                 {profile?.about_image ? (
                   <div style={{ position: 'relative', width: '100%', height: '100%' }}>
@@ -560,7 +833,7 @@ export default function HomePage() {
                   <div style={{
                     width: '100%',
                     height: '100%',
-                    background: 'linear-gradient(135deg, #1B4332 0%, #2D6A4F 100%)',
+                    background: 'linear-gradient(135deg, #0066CC 0%, #0052A3 100%)',
                     display: 'flex',
                     alignItems: 'flex-end',
                     justifyContent: 'center',
@@ -598,17 +871,17 @@ export default function HomePage() {
                 fontWeight: isDark ? '600' : '400'
               }}>
                 <p style={{ marginBottom: '20px' }}>
-                  Hello! I'm <strong style={{ fontWeight: isDark ? '800' : '700' }}>Kur Malual</strong>, a detail-oriented Junior Software Engineer with over 2 years of hands-on
-                  experience in full-stack development, UX/UI design, and mobile applications. I'm
+                  Hello! I'm <strong style={{ color: '#0066CC', fontWeight: '700' }}>Kur Malual</strong>, a detail-oriented <strong style={{ color: '#0066CC', fontWeight: '700' }}>Junior Software Engineer</strong> with over <strong style={{ color: '#0066CC', fontWeight: '700' }}>2 years</strong> of hands-on
+                  experience in <strong style={{ color: '#0066CC', fontWeight: '700' }}>full-stack development</strong>, <strong style={{ color: '#0066CC', fontWeight: '700' }}>UX/UI design</strong>, and <strong style={{ color: '#0066CC', fontWeight: '700' }}>mobile applications</strong>. I'm
                   proficient in building secure, scalable, and user-friendly software solutions.
                 </p>
                 <p style={{ marginBottom: '20px' }}>
-                  I graduated with <strong style={{ fontWeight: isDark ? '800' : '700' }}>First Class Honors</strong> in Software Engineering from African Leadership University.
-                  My technical expertise spans the MERN stack (MongoDB, Express.js, React, Node.js), React Native for mobile
+                  I graduated with <strong style={{ color: '#0066CC', fontWeight: '700' }}>First Class Honors</strong> in Software Engineering from <strong style={{ color: '#0066CC', fontWeight: '700' }}>African Leadership University</strong>.
+                  My technical expertise spans the <strong style={{ color: '#0066CC', fontWeight: '700' }}>MERN stack</strong> (MongoDB, Express.js, React, Node.js), <strong style={{ color: '#0066CC', fontWeight: '700' }}>React Native</strong> for mobile
                   development, Django, PostgreSQL, and modern DevOps practices.
                 </p>
                 <p>
-                  Beyond technical skills, I'm deeply committed to leadership and community service. I'm eager to join 
+                  Beyond technical skills, I'm deeply committed to <strong style={{ color: '#0066CC', fontWeight: '700' }}>leadership</strong> and <strong style={{ color: '#0066CC', fontWeight: '700' }}>community service</strong>. I'm eager to join 
                   innovative tech teams where I can apply my skills in development, product design, and emerging technologies.
                 </p>
               </div>
@@ -618,7 +891,7 @@ export default function HomePage() {
                   href="#contact"
                   style={{
                     padding: '12px 28px',
-                    backgroundColor: '#1B4332',
+                    backgroundColor: '#0066CC',
                     color: '#FFFFFF',
                     borderRadius: '8px',
                     fontWeight: '600',
@@ -626,15 +899,15 @@ export default function HomePage() {
                     textDecoration: 'none',
                     display: 'inline-block',
                     transition: 'all 0.3s ease',
-                    boxShadow: '0 3px 12px rgba(27, 67, 50, 0.3)'
+                    boxShadow: '0 3px 12px rgba(0, 102, 204, 0.3)'
                   }}
                   onMouseEnter={(e) => {
                     e.currentTarget.style.transform = 'translateY(-2px)';
-                    e.currentTarget.style.boxShadow = '0 5px 18px rgba(27, 67, 50, 0.4)';
+                    e.currentTarget.style.boxShadow = '0 5px 18px rgba(0, 102, 204, 0.4)';
                   }}
                   onMouseLeave={(e) => {
                     e.currentTarget.style.transform = 'translateY(0)';
-                    e.currentTarget.style.boxShadow = '0 3px 12px rgba(27, 67, 50, 0.3)';
+                    e.currentTarget.style.boxShadow = '0 3px 12px rgba(0, 102, 204, 0.3)';
                   }}
                 >
                   Get In Touch
@@ -656,7 +929,7 @@ export default function HomePage() {
             <h2 style={{ fontSize: 'clamp(1.75rem, 4vw, 2.5rem)', fontWeight: '800', color: isDark ? '#FFFFFF' : '#1A1A1A', marginBottom: '12px' }}>
               Selected Work
             </h2>
-            <p style={{ fontSize: '1rem', color: '#1B4332', fontWeight: isDark ? '800' : '700', letterSpacing: '0.5px' }}>
+            <p style={{ fontSize: '1rem', color: '#0066CC', fontWeight: isDark ? '800' : '700', letterSpacing: '0.5px' }}>
               Featured Projects
             </p>
             <p style={{ fontSize: '0.9375rem', color: isDark ? '#FFFFFF' : '#6B7280', marginTop: '12px', fontWeight: isDark ? '600' : '400' }}>
@@ -669,32 +942,43 @@ export default function HomePage() {
               <div
                 key={project.id || index}
                 style={{
-                  backgroundColor: 'rgba(255, 255, 255, 0.8)',
+                  backgroundColor: isDark ? 'rgba(26, 26, 26, 0.8)' : 'rgba(255, 255, 255, 0.8)',
                   backdropFilter: 'blur(10px)',
                   borderRadius: '16px',
                   overflow: 'hidden',
                   boxShadow: '0 2px 8px rgba(0, 0, 0, 0.08)',
-                  transition: 'all 0.3s ease',
-                  border: '1px solid rgba(229, 231, 235, 0.6)'
+                  transition: 'all 0.4s cubic-bezier(0.4, 0, 0.2, 1)',
+                  border: isDark ? '1px solid rgba(51, 51, 51, 0.6)' : '1px solid rgba(229, 231, 235, 0.6)',
+                  animation: `fadeInUp 0.6s ease-out ${index * 0.1}s both`,
+                  cursor: 'pointer'
                 }}
                 onMouseEnter={(e) => {
-                  e.currentTarget.style.transform = 'translateY(-8px)';
-                  e.currentTarget.style.boxShadow = '0 12px 24px rgba(27, 67, 50, 0.15)';
+                  e.currentTarget.style.transform = 'translateY(-12px) scale(1.02)';
+                  e.currentTarget.style.boxShadow = '0 20px 40px rgba(0, 102, 204, 0.2)';
+                  const img = e.currentTarget.querySelector('img');
+                  if (img) {
+                    (img as HTMLElement).style.transform = 'scale(1.1)';
+                  }
                 }}
                 onMouseLeave={(e) => {
-                  e.currentTarget.style.transform = 'translateY(0)';
+                  e.currentTarget.style.transform = 'translateY(0) scale(1)';
                   e.currentTarget.style.boxShadow = '0 2px 8px rgba(0, 0, 0, 0.08)';
+                  const img = e.currentTarget.querySelector('img');
+                  if (img) {
+                    (img as HTMLElement).style.transform = 'scale(1)';
+                  }
                 }}
               >
                 <div style={{
                   height: '200px',
                   position: 'relative',
                   background: project.featured 
-                    ? 'linear-gradient(135deg, #1B4332 0%, #2D6A4F 100%)'
+                    ? 'linear-gradient(135deg, #0066CC 0%, #0052A3 100%)'
                     : 'linear-gradient(135deg, #E8F5E9 0%, #C8E6C9 100%)',
                   display: 'flex',
                   alignItems: 'center',
-                  justifyContent: 'center'
+                  justifyContent: 'center',
+                  overflow: 'hidden'
                 }}>
                   {project.image ? (
                     <img
@@ -703,7 +987,8 @@ export default function HomePage() {
                       style={{ 
                         width: '100%',
                         height: '100%',
-                        objectFit: 'cover'
+                        objectFit: 'cover',
+                        transition: 'transform 0.4s cubic-bezier(0.4, 0, 0.2, 1)'
                       }}
                       onError={(e) => {
                         console.error('Failed to load project image:', project.image);
@@ -713,7 +998,7 @@ export default function HomePage() {
                   ) : (
                     <div style={{
                       fontSize: '3rem',
-                      color: project.featured ? '#FFFFFF' : '#1B4332',
+                      color: project.featured ? '#FFFFFF' : '#0066CC',
                       fontWeight: '800'
                     }}>
                       {project.title.substring(0, 2).toUpperCase()}
@@ -729,8 +1014,9 @@ export default function HomePage() {
                       borderRadius: '6px',
                       fontSize: '0.75rem',
                       fontWeight: '700',
-                      color: '#1B4332',
-                      zIndex: 1
+                      color: '#0066CC',
+                      zIndex: 1,
+                      animation: 'pulse 2s ease-in-out infinite'
                     }}>
                       FEATURED
                     </div>
@@ -740,7 +1026,7 @@ export default function HomePage() {
                   <h3 style={{ fontSize: '1.25rem', fontWeight: '700', marginBottom: '12px', color: isDark ? '#FFFFFF' : '#1A1A1A' }}>
                     {project.title}
                   </h3>
-                  <p style={{ fontSize: '0.9375rem', color: '#6B7280', marginBottom: '16px', lineHeight: '1.6' }}>
+                  <p style={{ fontSize: '0.9375rem', color: isDark ? '#E5E7EB' : '#6B7280', marginBottom: '16px', lineHeight: '1.6', fontWeight: isDark ? '600' : '400' }}>
                     {project.description.length > 100 
                       ? `${project.description.slice(0, 100)}...` 
                       : project.description}
@@ -750,7 +1036,7 @@ export default function HomePage() {
                       <span style={{
                         padding: '4px 12px',
                         backgroundColor: '#E8F5E9',
-                        color: '#1B4332',
+                        color: '#0066CC',
                         borderRadius: '6px',
                         fontSize: '0.8125rem',
                         fontWeight: '600'
@@ -764,7 +1050,7 @@ export default function HomePage() {
                     style={{
                       display: 'inline-block',
                       padding: '10px 20px',
-                      backgroundColor: '#1B4332',
+                      backgroundColor: '#0066CC',
                       color: '#FFFFFF',
                       borderRadius: '8px',
                       fontSize: '0.9375rem',
@@ -773,10 +1059,10 @@ export default function HomePage() {
                       transition: 'all 0.3s ease'
                     }}
                     onMouseEnter={(e) => {
-                      e.currentTarget.style.backgroundColor = '#2D6A4F';
+                      e.currentTarget.style.backgroundColor = '#0052A3';
                     }}
                     onMouseLeave={(e) => {
-                      e.currentTarget.style.backgroundColor = '#1B4332';
+                      e.currentTarget.style.backgroundColor = '#0066CC';
                     }}
                   >
                     View Details →
@@ -790,21 +1076,21 @@ export default function HomePage() {
             <a href="/projects" style={{
               padding: '16px 32px',
               backgroundColor: 'transparent',
-              color: '#1B4332',
+              color: '#0066CC',
               borderRadius: '12px',
               fontWeight: '700',
               textDecoration: 'none',
               display: 'inline-block',
-              border: '2px solid #1B4332',
+              border: '2px solid #0066CC',
               transition: 'all 0.3s ease'
             }}
             onMouseEnter={(e) => {
-              e.currentTarget.style.backgroundColor = '#1B4332';
+              e.currentTarget.style.backgroundColor = '#0066CC';
               e.currentTarget.style.color = '#FFFFFF';
             }}
             onMouseLeave={(e) => {
               e.currentTarget.style.backgroundColor = 'transparent';
-              e.currentTarget.style.color = '#1B4332';
+              e.currentTarget.style.color = '#0066CC';
             }}>
               View All Projects
             </a>
@@ -820,7 +1106,7 @@ export default function HomePage() {
             <h2 style={{ fontSize: 'clamp(1.75rem, 4vw, 2.5rem)', fontWeight: '800', color: isDark ? '#FFFFFF' : '#1A1A1A', marginBottom: '12px' }}>
               Capabilities
             </h2>
-            <p style={{ fontSize: '1rem', color: '#1B4332', fontWeight: isDark ? '800' : '700', letterSpacing: '0.5px' }}>
+            <p style={{ fontSize: '1rem', color: '#0066CC', fontWeight: isDark ? '800' : '700', letterSpacing: '0.5px' }}>
               Technical Arsenal
             </p>
             <p style={{ fontSize: '0.9375rem', color: isDark ? '#FFFFFF' : '#6B7280', marginTop: '12px', maxWidth: '700px', margin: '12px auto 0', fontWeight: isDark ? '600' : '400' }}>
@@ -864,20 +1150,20 @@ export default function HomePage() {
               <div
                 key={index}
                 style={{
-                  backgroundColor: 'rgba(250, 250, 249, 0.8)',
+                  backgroundColor: isDark ? 'rgba(26, 26, 26, 0.8)' : 'rgba(250, 250, 249, 0.8)',
                   backdropFilter: 'blur(10px)',
                   borderRadius: '12px',
                   padding: '28px 24px',
-                  border: '1px solid rgba(229, 231, 235, 0.6)',
+                  border: isDark ? '1px solid rgba(51, 51, 51, 0.6)' : '1px solid rgba(229, 231, 235, 0.6)',
                   transition: 'all 0.3s ease'
                 }}
                 onMouseEnter={(e) => {
-                  e.currentTarget.style.borderColor = '#1B4332';
+                  e.currentTarget.style.borderColor = '#0066CC';
                   e.currentTarget.style.transform = 'translateY(-4px)';
-                  e.currentTarget.style.boxShadow = '0 8px 20px rgba(27, 67, 50, 0.12)';
+                  e.currentTarget.style.boxShadow = '0 8px 20px rgba(0, 102, 204, 0.12)';
                 }}
                 onMouseLeave={(e) => {
-                  e.currentTarget.style.borderColor = '#E5E7EB';
+                  e.currentTarget.style.borderColor = isDark ? '#333333' : '#E5E7EB';
                   e.currentTarget.style.transform = 'translateY(0)';
                   e.currentTarget.style.boxShadow = 'none';
                 }}
@@ -885,7 +1171,7 @@ export default function HomePage() {
                 <h3 style={{ fontSize: '1.25rem', fontWeight: '700', marginBottom: '8px', color: isDark ? '#FFFFFF' : '#1A1A1A' }}>
                   {category.title}
                 </h3>
-                <p style={{ fontSize: '0.875rem', color: '#6B7280', marginBottom: '16px', lineHeight: '1.5' }}>
+                <p style={{ fontSize: '0.875rem', color: isDark ? '#E5E7EB' : '#6B7280', marginBottom: '16px', lineHeight: '1.5', fontWeight: isDark ? '600' : '400' }}>
                   {category.description}
                 </p>
                 <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px' }}>
@@ -894,12 +1180,12 @@ export default function HomePage() {
                       key={idx}
                       style={{
                         padding: '6px 12px',
-                        backgroundColor: '#FFFFFF',
-                        color: '#4A5568',
+                        backgroundColor: isDark ? '#1A1A1A' : '#FFFFFF',
+                        color: isDark ? '#FFFFFF' : '#4A5568',
                         borderRadius: '6px',
                         fontSize: '0.8125rem',
-                        fontWeight: '600',
-                        border: '1px solid #E5E7EB'
+                        fontWeight: isDark ? '700' : '600',
+                        border: isDark ? '1px solid #333333' : '1px solid #E5E7EB'
                       }}
                     >
                       {skill}
@@ -914,22 +1200,22 @@ export default function HomePage() {
             <a href="/skills" style={{
               padding: '12px 28px',
               backgroundColor: 'transparent',
-              color: '#1B4332',
+              color: '#0066CC',
               borderRadius: '8px',
               fontWeight: '600',
               fontSize: '0.9375rem',
               textDecoration: 'none',
               display: 'inline-block',
-              border: '2px solid #1B4332',
+              border: '2px solid #0066CC',
               transition: 'all 0.3s ease'
             }}
             onMouseEnter={(e) => {
-              e.currentTarget.style.backgroundColor = '#1B4332';
+              e.currentTarget.style.backgroundColor = '#0066CC';
               e.currentTarget.style.color = '#FFFFFF';
             }}
             onMouseLeave={(e) => {
               e.currentTarget.style.backgroundColor = 'transparent';
-              e.currentTarget.style.color = '#1B4332';
+              e.currentTarget.style.color = '#0066CC';
             }}>
               View All Skills
             </a>
@@ -945,7 +1231,7 @@ export default function HomePage() {
             <h2 style={{ fontSize: 'clamp(1.75rem, 4vw, 2.5rem)', fontWeight: '800', color: isDark ? '#FFFFFF' : '#1A1A1A', marginBottom: '12px' }}>
               My Journey
             </h2>
-            <p style={{ fontSize: '1rem', color: '#1B4332', fontWeight: isDark ? '800' : '700', letterSpacing: '0.5px' }}>
+            <p style={{ fontSize: '1rem', color: '#0066CC', fontWeight: isDark ? '800' : '700', letterSpacing: '0.5px' }}>
               Professional Path
             </p>
           </div>
@@ -969,144 +1255,149 @@ export default function HomePage() {
                   <div
                     key={exp.id || index}
                     style={{
-                      display: 'grid',
-                      gridTemplateColumns: exp.image ? '1fr 400px' : '1fr',
-                      gap: '32px',
-                      backgroundColor: 'rgba(255, 255, 255, 0.8)',
+                      backgroundColor: 'rgba(255, 255, 255, 0.95)',
                       backdropFilter: 'blur(10px)',
                       borderRadius: '16px',
-                      padding: '32px',
+                      padding: 'clamp(20px, 4vw, 32px)',
                       border: '2px solid rgba(229, 231, 235, 0.6)',
                       transition: 'all 0.3s ease',
-                      alignItems: 'start'
+                      overflow: 'hidden'
                     }}
                     onMouseEnter={(e) => {
-                      e.currentTarget.style.borderColor = '#1B4332';
-                      e.currentTarget.style.boxShadow = '0 8px 24px rgba(27, 67, 50, 0.12)';
+                      e.currentTarget.style.borderColor = '#0066CC';
+                      e.currentTarget.style.boxShadow = '0 8px 24px rgba(0, 102, 204, 0.12)';
                     }}
                     onMouseLeave={(e) => {
                       e.currentTarget.style.borderColor = '#E5E7EB';
                       e.currentTarget.style.boxShadow = 'none';
                     }}
                   >
-                    {/* Left - Content */}
-                    <div>
-                      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '16px', flexWrap: 'wrap', gap: '12px' }}>
-                        <div>
-                          <h3 style={{ fontSize: '1.5rem', fontWeight: '700', color: isDark ? '#FFFFFF' : '#1A1A1A', marginBottom: '6px' }}>
-                            {exp.role}
-                          </h3>
-                          <p style={{ fontSize: '1.0625rem', fontWeight: isDark ? '700' : '600', color: '#1B4332', marginBottom: '4px' }}>
-                            {exp.company}
-                          </p>
-                          <p style={{ fontSize: '0.875rem', color: '#6B7280' }}>
-                            {exp.location}
-                          </p>
-                        </div>
-                        <span style={{ 
-                          fontSize: '0.875rem', 
-                          color: '#6B7280', 
-                          fontWeight: '600',
-                          padding: '6px 14px',
-                          backgroundColor: '#F3F4F6',
-                          borderRadius: '8px'
+                    <div style={{
+                      display: 'grid',
+                      gridTemplateColumns: '1fr',
+                      gap: '24px'
+                    }}
+                    className="experience-card-layout">
+                      {/* Image - First on desktop (left side) */}
+                      {exp.image && (
+                        <div style={{
+                          width: '100%',
+                          height: 'clamp(300px, 40vw, 500px)',
+                          borderRadius: '12px',
+                          overflow: 'hidden',
+                          border: '3px solid #0066CC',
+                          boxShadow: '0 8px 20px rgba(0, 102, 204, 0.15)'
                         }}>
-                          {startYear} — {endYear}
-                        </span>
-                      </div>
-                      
-                      <p style={{ fontSize: '0.9375rem', color: '#4A5568', lineHeight: '1.7', marginBottom: '16px' }}>
-                        {exp.description}
-                      </p>
-                      
-                      {achievements.length > 0 && (
-                        <div style={{ marginBottom: '16px' }}>
-                          <p style={{ fontSize: '0.8125rem', fontWeight: '700', color: isDark ? '#FFFFFF' : '#1A1A1A', marginBottom: '10px', textTransform: 'uppercase', letterSpacing: '0.5px' }}>
-                            Key Achievements
-                          </p>
-                          <ul style={{ 
-                            listStyle: 'none', 
-                            padding: 0,
-                            display: 'flex',
-                            flexDirection: 'column',
-                            gap: '8px'
-                          }}>
-                            {achievements.map((achievement: string, idx: number) => (
-                              <li key={idx} style={{ 
-                                fontSize: '0.875rem', 
-                                color: '#6B7280',
-                                paddingLeft: '20px',
-                                position: 'relative',
-                                lineHeight: '1.6'
-                              }}>
-                                <span style={{
-                                  position: 'absolute',
-                                  left: '0',
-                                  color: '#1B4332',
-                                  fontWeight: '700',
-                                  fontSize: '1.125rem'
-                                }}>•</span>
-                                {achievement}
-                              </li>
-                            ))}
-                          </ul>
+                          <img
+                            src={exp.image}
+                            alt={`${exp.role} at ${exp.company}`}
+                            style={{ 
+                              width: '100%',
+                              height: '100%',
+                              objectFit: 'cover',
+                              objectPosition: 'center center'
+                            }}
+                            onError={(e) => {
+                              console.error('Failed to load experience image:', exp.image);
+                              e.currentTarget.style.display = 'none';
+                            }}
+                          />
                         </div>
                       )}
-                      
-                      {technologies.length > 0 && (
-                        <div>
-                          <p style={{ fontSize: '0.8125rem', fontWeight: '700', color: isDark ? '#FFFFFF' : '#1A1A1A', marginBottom: '10px', textTransform: 'uppercase', letterSpacing: '0.5px' }}>
-                            Technologies
-                          </p>
-                          <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px' }}>
-                            {technologies.map((tech: string, idx: number) => (
-                              <span
-                                key={idx}
-                                style={{
-                                  padding: '6px 12px',
-                                  backgroundColor: '#E8F5E9',
-                                  color: '#1B4332',
-                                  borderRadius: '6px',
-                                  fontSize: '0.8125rem',
-                                  fontWeight: '600',
-                                  border: '1px solid #1B433220'
-                                }}
-                              >
-                                {tech}
-                              </span>
-                            ))}
-                          </div>
-                        </div>
-                      )}
-                    </div>
 
-                    {/* Right - Image */}
-                    {exp.image && (
-                      <div style={{
-                        width: '100%',
-                        height: '500px',
-                        borderRadius: '12px',
-                        overflow: 'hidden',
-                        border: '3px solid #1B4332',
-                        boxShadow: '0 8px 20px rgba(27, 67, 50, 0.15)',
-                        flexShrink: 0
-                      }}>
-                        <img
-                          src={exp.image}
-                          alt={`${exp.role} at ${exp.company}`}
-                          style={{ 
-                            width: '100%',
-                            height: '100%',
-                            objectFit: 'cover',
-                            objectPosition: 'center center'
-                          }}
-                          onError={(e) => {
-                            console.error('Failed to load experience image:', exp.image);
-                            e.currentTarget.style.display = 'none';
-                          }}
-                        />
+                      {/* Content - Second on desktop (right side) */}
+                      <div>
+                        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '16px', flexWrap: 'wrap', gap: '12px' }}>
+                          <div style={{ flex: '1', minWidth: '200px' }}>
+                            <h3 style={{ fontSize: 'clamp(1.25rem, 3vw, 1.5rem)', fontWeight: '700', color: '#000000', marginBottom: '6px' }}>
+                              {exp.role}
+                            </h3>
+                            <p style={{ fontSize: 'clamp(1rem, 2.5vw, 1.0625rem)', fontWeight: '700', color: '#0066CC', marginBottom: '4px' }}>
+                              {exp.company}
+                            </p>
+                            <p style={{ fontSize: 'clamp(0.8125rem, 2vw, 0.875rem)', color: '#6B7280', fontWeight: '400' }}>
+                              {exp.location}
+                            </p>
+                          </div>
+                          <span style={{ 
+                            fontSize: 'clamp(0.75rem, 2vw, 0.875rem)', 
+                            color: '#1A1A1A', 
+                            fontWeight: '600',
+                            padding: '6px 14px',
+                            backgroundColor: '#F3F4F6',
+                            borderRadius: '8px',
+                            whiteSpace: 'nowrap'
+                          }}>
+                            {startYear} — {endYear}
+                          </span>
+                        </div>
+                        
+                        <p style={{ fontSize: 'clamp(0.875rem, 2vw, 0.9375rem)', color: '#4A5568', lineHeight: '1.7', marginBottom: '16px', fontWeight: '400' }}>
+                          {exp.description}
+                        </p>
+                        
+                        {achievements.length > 0 && (
+                          <div style={{ marginBottom: '16px' }}>
+                            <p style={{ fontSize: 'clamp(0.75rem, 2vw, 0.8125rem)', fontWeight: '700', color: '#0066CC', marginBottom: '10px', textTransform: 'uppercase', letterSpacing: '0.5px' }}>
+                              Key Achievements
+                            </p>
+                            <ul style={{ 
+                              listStyle: 'none', 
+                              padding: 0,
+                              display: 'flex',
+                              flexDirection: 'column',
+                              gap: '8px'
+                            }}>
+                              {achievements.map((achievement: string, idx: number) => (
+                                <li key={idx} style={{ 
+                                  fontSize: 'clamp(0.8125rem, 2vw, 0.875rem)', 
+                                  color: '#6B7280',
+                                  paddingLeft: '20px',
+                                  position: 'relative',
+                                  lineHeight: '1.6',
+                                  fontWeight: '400'
+                                }}>
+                                  <span style={{
+                                    position: 'absolute',
+                                    left: '0',
+                                    color: '#0066CC',
+                                    fontWeight: '700',
+                                    fontSize: '1.125rem'
+                                  }}>•</span>
+                                  {achievement}
+                                </li>
+                              ))}
+                            </ul>
+                          </div>
+                        )}
+                        
+                        {technologies.length > 0 && (
+                          <div>
+                            <p style={{ fontSize: 'clamp(0.75rem, 2vw, 0.8125rem)', fontWeight: '700', color: '#0066CC', marginBottom: '10px', textTransform: 'uppercase', letterSpacing: '0.5px' }}>
+                              Technologies
+                            </p>
+                            <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px' }}>
+                              {technologies.map((tech: string, idx: number) => (
+                                <span
+                                  key={idx}
+                                  style={{
+                                    padding: '6px 12px',
+                                    backgroundColor: '#E8F5E9',
+                                    color: '#0066CC',
+                                    borderRadius: '6px',
+                                    fontSize: 'clamp(0.75rem, 2vw, 0.8125rem)',
+                                    fontWeight: '600',
+                                    border: '1px solid #0066CC20'
+                                  }}
+                                >
+                                  {tech}
+                                </span>
+                              ))}
+                            </div>
+                          </div>
+                        )}
                       </div>
-                    )}
+                    </div>
                   </div>
                 );
               })
@@ -1162,9 +1453,9 @@ export default function HomePage() {
                     transition: 'all 0.3s ease'
                   }}
                   onMouseEnter={(e) => {
-                    e.currentTarget.style.borderColor = '#1B4332';
+                    e.currentTarget.style.borderColor = '#0066CC';
                     e.currentTarget.style.transform = 'translateX(8px)';
-                    e.currentTarget.style.boxShadow = '0 8px 20px rgba(27, 67, 50, 0.12)';
+                    e.currentTarget.style.boxShadow = '0 8px 20px rgba(0, 102, 204, 0.12)';
                   }}
                   onMouseLeave={(e) => {
                     e.currentTarget.style.borderColor = '#E5E7EB';
@@ -1177,7 +1468,7 @@ export default function HomePage() {
                       <h3 style={{ fontSize: '1.125rem', fontWeight: '700', color: isDark ? '#FFFFFF' : '#1A1A1A', marginBottom: '4px' }}>
                         {exp.role}
                       </h3>
-                      <p style={{ fontSize: '0.9375rem', fontWeight: isDark ? '700' : '600', color: '#1B4332' }}>
+                      <p style={{ fontSize: '0.9375rem', fontWeight: isDark ? '700' : '600', color: '#0066CC' }}>
                         {exp.company}
                       </p>
                     </div>
@@ -1216,7 +1507,7 @@ export default function HomePage() {
                           <span style={{
                             position: 'absolute',
                             left: '0',
-                            color: '#1B4332',
+                            color: '#0066CC',
                             fontWeight: '700'
                           }}>•</span>
                           {achievement}
@@ -1233,7 +1524,7 @@ export default function HomePage() {
                           style={{
                             padding: '3px 8px',
                             backgroundColor: '#E8F5E9',
-                            color: '#1B4332',
+                            color: '#0066CC',
                             borderRadius: '4px',
                             fontSize: '0.6875rem',
                             fontWeight: '600'
@@ -1253,22 +1544,22 @@ export default function HomePage() {
             <a href="/experience" style={{
               padding: '12px 28px',
               backgroundColor: 'transparent',
-              color: '#1B4332',
+              color: '#0066CC',
               borderRadius: '8px',
               fontWeight: '600',
               fontSize: '0.9375rem',
               textDecoration: 'none',
               display: 'inline-block',
-              border: '2px solid #1B4332',
+              border: '2px solid #0066CC',
               transition: 'all 0.3s ease'
             }}
             onMouseEnter={(e) => {
-              e.currentTarget.style.backgroundColor = '#1B4332';
+              e.currentTarget.style.backgroundColor = '#0066CC';
               e.currentTarget.style.color = '#FFFFFF';
             }}
             onMouseLeave={(e) => {
               e.currentTarget.style.backgroundColor = 'transparent';
-              e.currentTarget.style.color = '#1B4332';
+              e.currentTarget.style.color = '#0066CC';
             }}>
               View Full Experience
             </a>
@@ -1284,7 +1575,7 @@ export default function HomePage() {
             <h2 style={{ fontSize: 'clamp(1.75rem, 4vw, 2.5rem)', fontWeight: '800', color: isDark ? '#FFFFFF' : '#1A1A1A', marginBottom: '12px' }}>
               Education
             </h2>
-            <p style={{ fontSize: '1rem', color: '#1B4332', fontWeight: isDark ? '800' : '700', letterSpacing: '0.5px' }}>
+            <p style={{ fontSize: '1rem', color: '#0066CC', fontWeight: isDark ? '800' : '700', letterSpacing: '0.5px' }}>
               Academic Background
             </p>
           </div>
@@ -1307,7 +1598,7 @@ export default function HomePage() {
                   gap: '24px'
                 }}
                 onMouseEnter={(e) => {
-                  e.currentTarget.style.borderColor = '#1B4332';
+                  e.currentTarget.style.borderColor = '#0066CC';
                   e.currentTarget.style.transform = 'translateX(8px)';
                 }}
                 onMouseLeave={(e) => {
@@ -1320,7 +1611,7 @@ export default function HomePage() {
                   <h3 style={{ fontSize: '1.375rem', fontWeight: '700', marginBottom: '6px', color: isDark ? '#FFFFFF' : '#1A1A1A' }}>
                     {edu.institution}
                   </h3>
-                  <p style={{ fontSize: '1.0625rem', fontWeight: isDark ? '700' : '600', color: '#1B4332', marginBottom: '6px' }}>
+                  <p style={{ fontSize: '1.0625rem', fontWeight: isDark ? '700' : '600', color: '#0066CC', marginBottom: '6px' }}>
                     {edu.degree}
                   </p>
                   <p style={{ fontSize: '0.875rem', color: '#6B7280', marginBottom: '8px' }}>
@@ -1334,7 +1625,7 @@ export default function HomePage() {
                       borderRadius: '6px',
                       fontSize: '0.875rem',
                       fontWeight: '600',
-                      color: '#1B4332',
+                      color: '#0066CC',
                       marginTop: '6px'
                     }}>
                       {edu.scholarship}
@@ -1379,7 +1670,7 @@ export default function HomePage() {
           <div style={{ textAlign: 'center', marginTop: '48px' }}>
             <a href="/education" style={{
               padding: '12px 28px',
-              backgroundColor: '#1B4332',
+              backgroundColor: '#0066CC',
               color: '#FFFFFF',
               borderRadius: '8px',
               fontWeight: '600',
@@ -1387,15 +1678,15 @@ export default function HomePage() {
               textDecoration: 'none',
               display: 'inline-block',
               transition: 'all 0.3s ease',
-              boxShadow: '0 3px 12px rgba(27, 67, 50, 0.3)'
+              boxShadow: '0 3px 12px rgba(0, 102, 204, 0.3)'
             }}
             onMouseEnter={(e) => {
               e.currentTarget.style.transform = 'translateY(-2px)';
-              e.currentTarget.style.boxShadow = '0 5px 18px rgba(27, 67, 50, 0.4)';
+              e.currentTarget.style.boxShadow = '0 5px 18px rgba(0, 102, 204, 0.4)';
             }}
             onMouseLeave={(e) => {
               e.currentTarget.style.transform = 'translateY(0)';
-              e.currentTarget.style.boxShadow = '0 3px 12px rgba(27, 67, 50, 0.3)';
+              e.currentTarget.style.boxShadow = '0 3px 12px rgba(0, 102, 204, 0.3)';
             }}>
               View Full Education
             </a>
@@ -1412,7 +1703,7 @@ export default function HomePage() {
             <h2 style={{ fontSize: 'clamp(1.75rem, 4vw, 2.5rem)', fontWeight: '800', color: isDark ? '#FFFFFF' : '#1A1A1A', marginBottom: '12px' }}>
               Testimonials
             </h2>
-            <p style={{ fontSize: '1rem', color: '#1B4332', fontWeight: isDark ? '800' : '700', letterSpacing: '0.5px' }}>
+            <p style={{ fontSize: '1rem', color: '#0066CC', fontWeight: isDark ? '800' : '700', letterSpacing: '0.5px' }}>
               What People Say
             </p>
           </div>
@@ -1444,9 +1735,9 @@ export default function HomePage() {
                   position: 'relative'
                 }}
                 onMouseEnter={(e) => {
-                  e.currentTarget.style.borderColor = '#1B4332';
+                  e.currentTarget.style.borderColor = '#0066CC';
                   e.currentTarget.style.transform = 'translateY(-4px)';
-                  e.currentTarget.style.boxShadow = '0 8px 20px rgba(27, 67, 50, 0.12)';
+                  e.currentTarget.style.boxShadow = '0 8px 20px rgba(0, 102, 204, 0.12)';
                 }}
                 onMouseLeave={(e) => {
                   e.currentTarget.style.borderColor = '#E5E7EB';
@@ -1456,7 +1747,7 @@ export default function HomePage() {
               >
                 <div style={{
                   fontSize: '3rem',
-                  color: '#1B4332',
+                  color: '#0066CC',
                   opacity: 0.2,
                   lineHeight: '1',
                   marginBottom: '16px'
@@ -1508,7 +1799,7 @@ export default function HomePage() {
             }}>
               Let's Work Together
             </h2>
-            <p style={{ fontSize: '1rem', color: '#1B4332', fontWeight: isDark ? '800' : '700', letterSpacing: '0.5px' }}>
+            <p style={{ fontSize: '1rem', color: '#0066CC', fontWeight: isDark ? '800' : '700', letterSpacing: '0.5px' }}>
               Get In Touch
             </p>
           </div>
@@ -1522,19 +1813,19 @@ export default function HomePage() {
               <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
                 <div>
                   <p style={{ fontWeight: '600', color: isDark ? '#FFFFFF' : '#1A1A1A', marginBottom: '8px' }}>Email</p>
-                  <a href="mailto:kurmalual@gmail.com" style={{ color: '#1B4332', textDecoration: 'none', fontSize: '1rem', fontWeight: isDark ? '800' : '400' }}>
+                  <a href="mailto:kurmalual@gmail.com" style={{ color: '#0066CC', textDecoration: 'none', fontSize: '1rem', fontWeight: isDark ? '800' : '400' }}>
                     kurmalual@gmail.com
                   </a>
                 </div>
                 <div>
                   <p style={{ fontWeight: '600', color: isDark ? '#FFFFFF' : '#1A1A1A', marginBottom: '8px' }}>LinkedIn</p>
-                  <a href="https://linkedin.com/in/kurmalual" target="_blank" rel="noopener noreferrer" style={{ color: '#1B4332', textDecoration: 'none', fontSize: '1rem', fontWeight: isDark ? '800' : '400' }}>
+                  <a href="https://linkedin.com/in/kurmalual" target="_blank" rel="noopener noreferrer" style={{ color: '#0066CC', textDecoration: 'none', fontSize: '1rem', fontWeight: isDark ? '800' : '400' }}>
                     linkedin.com/in/kurmalual
                   </a>
                 </div>
                 <div>
                   <p style={{ fontWeight: '600', color: isDark ? '#FFFFFF' : '#1A1A1A', marginBottom: '8px' }}>GitHub</p>
-                  <a href="https://github.com/kurmalual" target="_blank" rel="noopener noreferrer" style={{ color: '#1B4332', textDecoration: 'none', fontSize: '1rem', fontWeight: isDark ? '800' : '400' }}>
+                  <a href="https://github.com/kurmalual" target="_blank" rel="noopener noreferrer" style={{ color: '#0066CC', textDecoration: 'none', fontSize: '1rem', fontWeight: isDark ? '800' : '400' }}>
                     github.com/kurmalual
                   </a>
                 </div>
@@ -1568,7 +1859,7 @@ export default function HomePage() {
                       fontSize: '1rem',
                       transition: 'border-color 0.3s'
                     }}
-                    onFocus={(e) => e.currentTarget.style.borderColor = '#1B4332'}
+                    onFocus={(e) => e.currentTarget.style.borderColor = '#0066CC'}
                     onBlur={(e) => e.currentTarget.style.borderColor = '#E5E7EB'}
                   />
                   <input
@@ -1587,7 +1878,7 @@ export default function HomePage() {
                       fontSize: '1rem',
                       transition: 'border-color 0.3s'
                     }}
-                    onFocus={(e) => e.currentTarget.style.borderColor = '#1B4332'}
+                    onFocus={(e) => e.currentTarget.style.borderColor = '#0066CC'}
                     onBlur={(e) => e.currentTarget.style.borderColor = '#E5E7EB'}
                   />
                 </div>
@@ -1608,7 +1899,7 @@ export default function HomePage() {
                     fontSize: '1rem',
                     transition: 'border-color 0.3s'
                   }}
-                  onFocus={(e) => e.currentTarget.style.borderColor = '#1B4332'}
+                  onFocus={(e) => e.currentTarget.style.borderColor = '#0066CC'}
                   onBlur={(e) => e.currentTarget.style.borderColor = '#E5E7EB'}
                 />
 
@@ -1629,7 +1920,7 @@ export default function HomePage() {
                     resize: 'vertical',
                     transition: 'border-color 0.3s'
                   }}
-                  onFocus={(e) => e.currentTarget.style.borderColor = '#1B4332'}
+                  onFocus={(e) => e.currentTarget.style.borderColor = '#0066CC'}
                   onBlur={(e) => e.currentTarget.style.borderColor = '#E5E7EB'}
                 />
 
@@ -1639,7 +1930,7 @@ export default function HomePage() {
                   style={{
                     width: '100%',
                     padding: '16px 32px',
-                    backgroundColor: '#1B4332',
+                    backgroundColor: '#0066CC',
                     color: '#FFFFFF',
                     borderRadius: '12px',
                     fontWeight: '700',
@@ -1648,17 +1939,17 @@ export default function HomePage() {
                     cursor: status === 'loading' ? 'not-allowed' : 'pointer',
                     opacity: status === 'loading' ? 0.6 : 1,
                     transition: 'all 0.3s ease',
-                    boxShadow: '0 4px 14px rgba(27, 67, 50, 0.4)'
+                    boxShadow: '0 4px 14px rgba(0, 102, 204, 0.4)'
                   }}
                   onMouseEnter={(e) => {
                     if (status !== 'loading') {
                       e.currentTarget.style.transform = 'translateY(-2px)';
-                      e.currentTarget.style.boxShadow = '0 6px 20px rgba(27, 67, 50, 0.5)';
+                      e.currentTarget.style.boxShadow = '0 6px 20px rgba(0, 102, 204, 0.5)';
                     }
                   }}
                   onMouseLeave={(e) => {
                     e.currentTarget.style.transform = 'translateY(0)';
-                    e.currentTarget.style.boxShadow = '0 4px 14px rgba(27, 67, 50, 0.4)';
+                    e.currentTarget.style.boxShadow = '0 4px 14px rgba(0, 102, 204, 0.4)';
                   }}
                 >
                   {status === 'loading' ? 'Sending...' : 'Send Message'}
@@ -1691,12 +1982,12 @@ export default function HomePage() {
           width: '56px',
           height: '56px',
           borderRadius: '50%',
-          backgroundColor: '#1B4332',
+          backgroundColor: '#0066CC',
           color: '#FFFFFF',
           border: 'none',
           cursor: 'pointer',
           fontSize: '24px',
-          boxShadow: '0 4px 14px rgba(27, 67, 50, 0.4)',
+          boxShadow: '0 4px 14px rgba(0, 102, 204, 0.4)',
           transition: 'all 0.3s ease',
           display: 'flex',
           alignItems: 'center',
@@ -1705,11 +1996,11 @@ export default function HomePage() {
         }}
         onMouseEnter={(e) => {
           e.currentTarget.style.transform = 'translateY(-4px)';
-          e.currentTarget.style.boxShadow = '0 6px 20px rgba(27, 67, 50, 0.5)';
+          e.currentTarget.style.boxShadow = '0 6px 20px rgba(0, 102, 204, 0.5)';
         }}
         onMouseLeave={(e) => {
           e.currentTarget.style.transform = 'translateY(0)';
-          e.currentTarget.style.boxShadow = '0 4px 14px rgba(27, 67, 50, 0.4)';
+          e.currentTarget.style.boxShadow = '0 4px 14px rgba(0, 102, 204, 0.4)';
         }}
       >
         ↑
@@ -1717,3 +2008,4 @@ export default function HomePage() {
     </div>
   );
 }
+
