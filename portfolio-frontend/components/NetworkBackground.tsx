@@ -49,8 +49,8 @@ export default function NetworkBackground() {
       radius: number;
 
       constructor() {
-        this.x = Math.random() * (canvas?.width || 0);
-        this.y = Math.random() * (canvas?.height || 0);
+        this.x = Math.random() * canvas!.width;
+        this.y = Math.random() * canvas!.height;
         this.vx = (Math.random() - 0.5) * 0.5;
         this.vy = (Math.random() - 0.5) * 0.5;
         this.radius = Math.random() * 2 + 1;
@@ -61,8 +61,8 @@ export default function NetworkBackground() {
         this.y += this.vy;
 
         // Bounce off edges
-        if (this.x < 0 || this.x > (canvas?.width || 0)) this.vx *= -1;
-        if (this.y < 0 || this.y > (canvas?.height || 0)) this.vy *= -1;
+        if (this.x < 0 || this.x > canvas!.width) this.vx *= -1;
+        if (this.y < 0 || this.y > canvas!.height) this.vy *= -1;
       }
 
       draw() {
@@ -76,7 +76,7 @@ export default function NetworkBackground() {
 
     // Create particles
     const particles: Particle[] = [];
-    const particleCount = Math.floor((canvas.width * canvas.height) / 15000);
+    const particleCount = Math.floor((canvas!.width * canvas!.height) / 15000);
     
     for (let i = 0; i < particleCount; i++) {
       particles.push(new Particle());
@@ -94,7 +94,7 @@ export default function NetworkBackground() {
 
     // Animation loop
     const animate = () => {
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      ctx.clearRect(0, 0, canvas!.width, canvas!.height);
 
       // Update and draw particles
       particles.forEach(particle => {
