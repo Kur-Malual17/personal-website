@@ -110,7 +110,7 @@ if USE_R2_STORAGE:
     # Use Cloudflare R2 for media files in production
     AWS_ACCESS_KEY_ID = os.environ.get('R2_ACCESS_KEY_ID')
     AWS_SECRET_ACCESS_KEY = os.environ.get('R2_SECRET_ACCESS_KEY')
-    AWS_STORAGE_BUCKET_NAME = os.environ.get('R2_BUCKET_NAME')
+    AWS_STORAGE_BUCKET_NAME = os.environ.get('R2_BUCKET_NAME', 'personal-website')
     AWS_S3_ENDPOINT_URL = os.environ.get('R2_ENDPOINT_URL')
     AWS_S3_REGION_NAME = 'auto'  # R2 uses 'auto' for region
     AWS_S3_CUSTOM_DOMAIN = os.environ.get('R2_PUBLIC_DOMAIN')  # Your R2 public URL
@@ -118,20 +118,16 @@ if USE_R2_STORAGE:
     AWS_S3_OBJECT_PARAMETERS = {
         'CacheControl': 'max-age=86400',
     }
-    # Don't set AWS_LOCATION - let the bucket name be part of the URL path
-    AWS_LOCATION = ''
+    AWS_LOCATION = 'media'  # Files will be stored in media/ folder
     
     # Use R2 for media files
     DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
     
-    # Set MEDIA_URL based on custom domain or default R2 URL
+    # Set MEDIA_URL - use custom domain if provided
     if AWS_S3_CUSTOM_DOMAIN:
-        # Custom domain should NOT include https:// in the variable
-        # Include bucket name in the path
-        MEDIA_URL = f'https://{AWS_S3_CUSTOM_DOMAIN}/{AWS_STORAGE_BUCKET_NAME}/'
+        MEDIA_URL = f'https://{AWS_S3_CUSTOM_DOMAIN}/{AWS_STORAGE_BUCKET_NAME}/media/'
     else:
-        # Use default R2 endpoint URL
-        MEDIA_URL = f'{AWS_S3_ENDPOINT_URL}/{AWS_STORAGE_BUCKET_NAME}/'
+        MEDIA_URL = f'{AWS_S3_ENDPOINT_URL}/{AWS_STORAGE_BUCKET_NAME}/media/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
