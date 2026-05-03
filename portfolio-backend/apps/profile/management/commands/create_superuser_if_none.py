@@ -25,11 +25,16 @@ class Command(BaseCommand):
             )
             return
 
-        User.objects.create_superuser(
-            username=username,
-            email=email,
-            password=password
-        )
-        self.stdout.write(
-            self.style.SUCCESS(f'Superuser "{username}" created successfully')
-        )
+        try:
+            User.objects.create_superuser(
+                username=username,
+                email=email,
+                password=password
+            )
+            self.stdout.write(
+                self.style.SUCCESS(f'Superuser "{username}" created successfully')
+            )
+        except Exception as e:
+            self.stdout.write(
+                self.style.ERROR(f'Failed to create superuser: {str(e)}')
+            )
