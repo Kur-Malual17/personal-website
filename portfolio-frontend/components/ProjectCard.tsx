@@ -31,7 +31,10 @@ export default function ProjectCard({ project }: ProjectCardProps) {
         </p>
         
         <div className="flex flex-wrap gap-2 mb-4">
-          {project.technologies.map(tech => (
+          {(Array.isArray(project.technologies) 
+            ? project.technologies 
+            : project.technologies.split(',').map(t => t.trim())
+          ).map(tech => (
             <span 
               key={tech}
               className="text-xs px-3 py-1 rounded-full"
