@@ -117,16 +117,17 @@ if USE_R2_STORAGE:
     AWS_S3_OBJECT_PARAMETERS = {
         'CacheControl': 'max-age=86400',
     }
-    AWS_LOCATION = 'media'
+    # Files are stored with personal-website/media/ prefix inside the bucket
+    AWS_LOCATION = 'personal-website/media'
     AWS_S3_FILE_OVERWRITE = False
-    AWS_QUERYSTRING_AUTH = False  # Don't add auth parameters to URLs
+    AWS_QUERYSTRING_AUTH = False
     
     # Use R2 for media files
     DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
     
-    # Simple MEDIA_URL using the public R2 domain
+    # MEDIA_URL using the public R2 domain
     R2_PUBLIC_DOMAIN = os.environ.get('R2_PUBLIC_DOMAIN', 'pub-d0db390aa0bb494dacc74859a0231ff7.r2.dev')
-    MEDIA_URL = f'https://{R2_PUBLIC_DOMAIN}/{AWS_STORAGE_BUCKET_NAME}/media/'
+    MEDIA_URL = f'https://{R2_PUBLIC_DOMAIN}/personal-website/media/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
