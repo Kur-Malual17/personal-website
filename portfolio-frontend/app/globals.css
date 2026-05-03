@@ -1,9 +1,6 @@
-@import "tailwindcss";
-
-@theme {
-  --font-heading: var(--font-syne);
-  --font-body: var(--font-dm-sans);
-}
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
 :root {
   /* Professional Color Palette */
