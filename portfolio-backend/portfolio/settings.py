@@ -113,7 +113,7 @@ if USE_R2_STORAGE:
     AWS_STORAGE_BUCKET_NAME = os.environ.get('R2_BUCKET_NAME')
     AWS_S3_ENDPOINT_URL = os.environ.get('R2_ENDPOINT_URL')
     AWS_S3_REGION_NAME = 'auto'  # R2 uses 'auto' for region
-    AWS_S3_CUSTOM_DOMAIN = os.environ.get('R2_PUBLIC_DOMAIN')  # Optional: custom domain
+    AWS_S3_CUSTOM_DOMAIN = os.environ.get('R2_PUBLIC_DOMAIN')  # Your R2 public URL
     AWS_DEFAULT_ACL = None
     AWS_S3_OBJECT_PARAMETERS = {
         'CacheControl': 'max-age=86400',
@@ -122,10 +122,14 @@ if USE_R2_STORAGE:
     
     # Use R2 for media files
     DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
-    MEDIA_URL = f'{AWS_S3_ENDPOINT_URL}/{AWS_STORAGE_BUCKET_NAME}/media/'
     
+    # Set MEDIA_URL based on custom domain or default R2 URL
     if AWS_S3_CUSTOM_DOMAIN:
+        # Custom domain should NOT include https:// in the variable
         MEDIA_URL = f'https://{AWS_S3_CUSTOM_DOMAIN}/media/'
+    else:
+        # Use default R2 public URL (without https:// prefix in variable)
+        MEDIA_URL = f'https://{AWS_S3_CUSTOM_DOMAIN}/media/' if AWS_S3_CUSTOM_DOMAIN else f'{AWS_S3_ENDPOINT_URL}/{AWS_STORAGE_BUCKET_NAME}/media/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
