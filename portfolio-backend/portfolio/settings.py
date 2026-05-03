@@ -143,6 +143,11 @@ CORS_ALLOWED_ORIGINS = os.environ.get(
     'http://localhost:3000'
 ).split(',')
 
+# Also allow Vercel preview deployments (*.vercel.app)
+CORS_ALLOWED_ORIGIN_REGEXES = [
+    r"^https://.*\.vercel\.app$",  # Allow all Vercel preview deployments
+]
+
 CORS_ALLOW_CREDENTIALS = True
 
 # Allow CORS for media files
