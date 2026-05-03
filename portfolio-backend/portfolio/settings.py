@@ -10,6 +10,14 @@ DEBUG = os.environ.get('DEBUG', 'True') == 'True'
 
 ALLOWED_HOSTS = os.environ.get('ALLOWED_HOSTS', 'localhost,127.0.0.1').split(',')
 
+# CSRF Settings for production
+CSRF_TRUSTED_ORIGINS = [
+    f'https://{host}' for host in ALLOWED_HOSTS if host not in ['localhost', '127.0.0.1']
+]
+# Add localhost for development
+if DEBUG:
+    CSRF_TRUSTED_ORIGINS.extend(['http://localhost:3000', 'http://127.0.0.1:3000'])
+
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
