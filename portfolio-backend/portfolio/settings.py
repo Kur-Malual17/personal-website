@@ -117,19 +117,19 @@ if USE_R2_STORAGE:
     AWS_S3_OBJECT_PARAMETERS = {
         'CacheControl': 'max-age=86400',
     }
-    # Don't use AWS_LOCATION - it's causing the duplication
-    AWS_LOCATION = ''
+    # Set location to 'media' so files go to personal-website/media/ (not personal-website/personal-website/media/)
+    AWS_LOCATION = 'media'
     AWS_S3_FILE_OVERWRITE = False
     AWS_QUERYSTRING_AUTH = False
     
-    # Use custom domain to serve files from public URL instead of private endpoint
+    # Use custom domain to serve files from public URL
     AWS_S3_CUSTOM_DOMAIN = 'pub-d0db390aa0bb494dacc74859a0231ff7.r2.dev'
     
     # Use R2 for media files
     DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
     
-    # MEDIA_URL using the public domain with correct path structure
-    MEDIA_URL = f'https://{AWS_S3_CUSTOM_DOMAIN}/personal-website/personal-website/media/'
+    # MEDIA_URL - files will be at: personal-website/media/...
+    MEDIA_URL = f'https://{AWS_S3_CUSTOM_DOMAIN}/personal-website/media/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
