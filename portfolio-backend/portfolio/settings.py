@@ -1,6 +1,10 @@
 import os
 from pathlib import Path
 import dj_database_url
+from dotenv import load_dotenv
+
+# Load environment variables from .env file
+load_dotenv()
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -117,19 +121,21 @@ if USE_R2_STORAGE:
     AWS_S3_OBJECT_PARAMETERS = {
         'CacheControl': 'max-age=86400',
     }
-    # Set location to 'media' so files go to personal-website/media/ (not personal-website/personal-website/media/)
+    # AWS_LOCATION is the prefix path within the bucket
     AWS_LOCATION = 'media'
     AWS_S3_FILE_OVERWRITE = False
     AWS_QUERYSTRING_AUTH = False
     
     # Use custom domain to serve files from public URL
-    AWS_S3_CUSTOM_DOMAIN = 'pub-d0db390aa0bb494dacc74859a0231ff7.r2.dev'
+    # Include the bucket name in the custom domain path since R2 public URL includes it
+    AWS_S3_CUSTOM_DOMAIN = f'pub-d0db390aa0bb494dacc74859a0231ff7.r2.dev/{AWS_STORAGE_BUCKET_NAME}'
     
     # Use R2 for media files
     DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
     
-    # MEDIA_URL - files will be at: personal-website/media/...
-    MEDIA_URL = f'https://{AWS_S3_CUSTOM_DOMAIN}/personal-website/media/'
+    # MEDIA_URL will be constructed as: https://{AWS_S3_CUSTOM_DOMAIN}/{AWS_LOCATION}/
+    # Result: https://pub-d0db390aa0bb494dacc74859a0231ff7.r2.dev/personal-website/media/
+    MEDIA_URL = f'https://{AWS_S3_CUSTOM_DOMAIN}/{AWS_LOCATION}/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
