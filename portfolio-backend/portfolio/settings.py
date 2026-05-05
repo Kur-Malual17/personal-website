@@ -122,12 +122,14 @@ if USE_R2_STORAGE:
     AWS_S3_FILE_OVERWRITE = False
     AWS_QUERYSTRING_AUTH = False
     
+    # Use custom domain to serve files from public URL instead of private endpoint
+    AWS_S3_CUSTOM_DOMAIN = 'pub-d0db390aa0bb494dacc74859a0231ff7.r2.dev'
+    
     # Use R2 for media files
     DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
     
-    # Hardcode the correct MEDIA_URL based on actual R2 file structure
-    # Files are stored at: personal-website/personal-website/media/...
-    MEDIA_URL = 'https://pub-d0db390aa0bb494dacc74859a0231ff7.r2.dev/personal-website/personal-website/media/'
+    # MEDIA_URL using the public domain with correct path structure
+    MEDIA_URL = f'https://{AWS_S3_CUSTOM_DOMAIN}/personal-website/personal-website/media/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
