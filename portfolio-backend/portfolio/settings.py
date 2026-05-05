@@ -1,10 +1,14 @@
 import os
 from pathlib import Path
 import dj_database_url
-from dotenv import load_dotenv
 
-# Load environment variables from .env file
-load_dotenv()
+# Load environment variables from .env file (optional, for local development)
+try:
+    from dotenv import load_dotenv
+    load_dotenv()
+except ImportError:
+    # dotenv not installed, will use environment variables directly (production)
+    pass
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
