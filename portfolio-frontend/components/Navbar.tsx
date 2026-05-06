@@ -149,7 +149,7 @@ export default function Navbar() {
               Projects
             </Link>
             <Link 
-              href="/contact" 
+              href="/#contact" 
               style={{
                 padding: '10px 24px',
                 backgroundColor: '#0066CC',
@@ -258,7 +258,7 @@ export default function Navbar() {
               borderLeft: isActive('/projects') ? '3px solid #0066CC' : 'none',
               paddingLeft: isActive('/projects') ? '12px' : '0'
             }} onClick={() => setIsOpen(false)}>Projects</Link>
-            <Link href="/contact" style={{ 
+            <Link href="/#contact" style={{ 
               color: isActive('/contact') ? '#0066CC' : '#4A5568', 
               fontWeight: isActive('/contact') ? '700' : '500', 
               padding: '8px 0', 
