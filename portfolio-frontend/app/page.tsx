@@ -554,7 +554,7 @@ export default function HomePage() {
                 </a>
                 
                 <a
-                  href="https://github.com"
+                  href="https://github.com/Kur-Malual17"
                   target="_blank"
                   rel="noopener noreferrer"
                   style={{
@@ -1825,8 +1825,8 @@ export default function HomePage() {
                 </div>
                 <div>
                   <p style={{ fontWeight: '600', color: isDark ? '#FFFFFF' : '#1A1A1A', marginBottom: '8px' }}>GitHub</p>
-                  <a href="https://github.com/kurmalual" target="_blank" rel="noopener noreferrer" style={{ color: '#0066CC', textDecoration: 'none', fontSize: '1rem', fontWeight: isDark ? '800' : '400' }}>
-                    github.com/kurmalual
+                  <a href="https://github.com/Kur-Malual17" target="_blank" rel="noopener noreferrer" style={{ color: '#0066CC', textDecoration: 'none', fontSize: '1rem', fontWeight: isDark ? '800' : '400' }}>
+                    github.com/Kur-Malual17
                   </a>
                 </div>
                 <div>

@@ -83,8 +83,8 @@ export default function ContactPage() {
               <div style={{ display: 'flex', alignItems: 'start', gap: '1rem' }}>
                 <div>
                   <p style={{ fontWeight: '600', color: '#000', marginBottom: '4px', fontSize: 'clamp(0.9375rem, 2vw, 1rem)' }}>LinkedIn</p>
-                  <a href="https://linkedin.com/in/kurmalual" target="_blank" rel="noopener noreferrer" style={{ color: '#0066CC', textDecoration: 'none', fontSize: 'clamp(0.875rem, 2vw, 1rem)' }}>
-                    linkedin.com/in/kurmalual
+                  <a href="https://www.linkedin.com/in/k-malual" target="_blank" rel="noopener noreferrer" style={{ color: '#0066CC', textDecoration: 'none', fontSize: 'clamp(0.875rem, 2vw, 1rem)' }}>
+                    linkedin.com/in/k-malual
                   </a>
                 </div>
               </div>
@@ -92,8 +92,8 @@ export default function ContactPage() {
               <div style={{ display: 'flex', alignItems: 'start', gap: '1rem' }}>
                 <div>
                   <p style={{ fontWeight: '600', color: '#000', marginBottom: '4px', fontSize: 'clamp(0.9375rem, 2vw, 1rem)' }}>GitHub</p>
-                  <a href="https://github.com/kurmalual" target="_blank" rel="noopener noreferrer" style={{ color: '#0066CC', textDecoration: 'none', fontSize: 'clamp(0.875rem, 2vw, 1rem)' }}>
-                    github.com/kurmalual
+                  <a href="https://github.com/Kur-Malual17" target="_blank" rel="noopener noreferrer" style={{ color: '#0066CC', textDecoration: 'none', fontSize: 'clamp(0.875rem, 2vw, 1rem)' }}>
+                    github.com/Kur-Malual17
                   </a>
                 </div>
               </div>

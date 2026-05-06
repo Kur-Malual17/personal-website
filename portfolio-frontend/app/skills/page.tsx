@@ -244,7 +244,7 @@ export default function SkillsPage() {
               Have a project in mind? Let's discuss how I can help bring your ideas to life.
             </p>
             <a
-              href="/contact"
+              href="/#contact"
               style={{
                 display: 'inline-block',
                 padding: 'clamp(14px, 3vw, 18px) clamp(28px, 6vw, 40px)',
