@@ -363,7 +363,7 @@ export default function AboutPage() {
           </a>
           
           <a
-            href="#contact"
+            href="/contact"
             style={{
               display: 'inline-block',
               padding: 'clamp(14px, 3vw, 18px) clamp(32px, 6vw, 48px)',
@@ -389,7 +389,10 @@ export default function AboutPage() {
           </a>
           
           <a
-            href="/resume.pdf"
+            href="https://personal-website-production-643f.up.railway.app/media/resume/Kur_Malual_Resume.pdf"
+            target="_blank"
+            rel="noopener noreferrer"
+            download
             style={{
               display: 'inline-flex',
               alignItems: 'center',
@@ -425,7 +428,7 @@ export default function AboutPage() {
           marginBottom: 'clamp(16px, 3vw, 24px)'
         }}>
           <a
-            href="https://facebook.com"
+            href="https://www.facebook.com/share/18YGpXFrFy/"
             target="_blank"
             rel="noopener noreferrer"
             style={{
@@ -459,7 +462,7 @@ export default function AboutPage() {
           </a>
           
           <a
-            href="https://twitter.com"
+            href="https://x.com/majokdit5"
             target="_blank"
             rel="noopener noreferrer"
             style={{
@@ -493,7 +496,7 @@ export default function AboutPage() {
           </a>
           
           <a
-            href="https://linkedin.com"
+            href="https://www.linkedin.com/in/k-malual"
             target="_blank"
             rel="noopener noreferrer"
             style={{
@@ -527,7 +530,7 @@ export default function AboutPage() {
           </a>
           
           <a
-            href="https://github.com"
+            href="https://github.com/Kur-Malual17"
             target="_blank"
             rel="noopener noreferrer"
             style={{
