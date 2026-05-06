@@ -455,7 +455,7 @@ export default function HomePage() {
               {/* Social Media Icons */}
               <div style={{ display: 'flex', gap: '16px', flexWrap: 'wrap' }}>
                 <a
-                  href="https://facebook.com"
+                  href="https://www.facebook.com/share/18YGpXFrFy/"
                   target="_blank"
                   rel="noopener noreferrer"
                   style={{
@@ -488,7 +488,7 @@ export default function HomePage() {
                 </a>
                 
                 <a
-                  href="https://twitter.com"
+                  href="https://x.com/majokdit5"
                   target="_blank"
                   rel="noopener noreferrer"
                   style={{
@@ -521,7 +521,7 @@ export default function HomePage() {
                 </a>
                 
                 <a
-                  href="https://linkedin.com"
+                  href="https://www.linkedin.com/in/k-malual"
                   target="_blank"
                   rel="noopener noreferrer"
                   style={{
@@ -1819,8 +1819,8 @@ export default function HomePage() {
                 </div>
                 <div>
                   <p style={{ fontWeight: '600', color: isDark ? '#FFFFFF' : '#1A1A1A', marginBottom: '8px' }}>LinkedIn</p>
-                  <a href="https://linkedin.com/in/kurmalual" target="_blank" rel="noopener noreferrer" style={{ color: '#0066CC', textDecoration: 'none', fontSize: '1rem', fontWeight: isDark ? '800' : '400' }}>
-                    linkedin.com/in/kurmalual
+                  <a href="https://www.linkedin.com/in/k-malual" target="_blank" rel="noopener noreferrer" style={{ color: '#0066CC', textDecoration: 'none', fontSize: '1rem', fontWeight: isDark ? '800' : '400' }}>
+                    linkedin.com/in/k-malual
                   </a>
                 </div>
                 <div>
