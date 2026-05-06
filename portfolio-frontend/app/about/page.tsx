@@ -355,13 +355,7 @@ export default function AboutPage() {
         </div>
 
         {/* CTA Buttons */}
-        <div style={{ 
-          display: 'flex', 
-          flexWrap: 'wrap',
-          gap: '16px', 
-          justifyContent: 'center',
-          marginBottom: 'clamp(24px, 4vw, 32px)'
-        }}>
+        <div className="cta-buttons-container">
           <a
             href="mailto:majokdit711@gmail.com"
             style={{
@@ -390,7 +384,7 @@ export default function AboutPage() {
           </a>
           
           <a
-            href="/contact"
+            href="/#contact"
             style={{
               display: 'inline-block',
               padding: 'clamp(14px, 3vw, 18px) clamp(32px, 6vw, 48px)',
