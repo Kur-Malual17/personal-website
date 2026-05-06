@@ -2,6 +2,7 @@
 
 import { Metadata } from 'next';
 import { useState } from 'react';
+import BackButton from '@/components/BackButton';
 
 export default function ContactPage() {
   const [formData, setFormData] = useState({
@@ -38,6 +39,7 @@ export default function ContactPage() {
 
   return (
     <main className="min-h-screen py-12 sm:py-16 lg:py-20" style={{ paddingTop: '80px', paddingLeft: 'clamp(24px, 5vw, 48px)', paddingRight: 'clamp(24px, 5vw, 48px)' }}>
+      <BackButton />
       <div className="max-w-5xl mx-auto">
         <div style={{ textAlign: 'center', marginBottom: 'clamp(2rem, 5vw, 3rem)' }}>
           <div style={{

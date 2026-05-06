@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
+import BackButton from '@/components/BackButton';
 
 // Custom hook to detect dark mode
 function useDarkMode() {
@@ -84,6 +85,7 @@ export default function ExperiencePage() {
   }
   return (
     <main className="min-h-screen" style={{ paddingTop: 'clamp(80px, 10vw, 120px)', paddingBottom: 'clamp(40px, 6vw, 60px)', paddingLeft: 'clamp(24px, 5vw, 48px)', paddingRight: 'clamp(24px, 5vw, 48px)' }}>
+      <BackButton />
       <div className="max-w-6xl mx-auto">
         {/* Header */}
         <div style={{ textAlign: 'center', marginBottom: 'clamp(30px, 5vw, 50px)' }}>
