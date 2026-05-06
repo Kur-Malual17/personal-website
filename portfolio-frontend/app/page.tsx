@@ -358,13 +358,7 @@ export default function HomePage() {
               </div>
               
               {/* CTA Buttons */}
-              <div style={{ 
-                display: 'flex', 
-                gap: 'clamp(8px, 2vw, 12px)', 
-                flexWrap: 'wrap', 
-                marginBottom: '24px',
-                justifyContent: 'flex-start'
-              }}>
+              <div className="cta-buttons-container">
                 <a
                   href="mailto:kurmalual@gmail.com"
                   style={{

@@ -240,3 +240,58 @@ a {
     grid-template-columns: 1fr !important;
   }
 }
+
+/* CTA Buttons Responsive Layout */
+.cta-buttons-container {
+  display: flex;
+  gap: clamp(10px, 2vw, 12px);
+  flex-wrap: wrap;
+  margin-bottom: 24px;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+/* Mobile: Stack buttons vertically on very small screens */
+@media (max-width: 390px) {
+  .cta-buttons-container {
+    flex-direction: column;
+    width: 100%;
+    gap: 12px;
+  }
+  
+  .cta-buttons-container a {
+    width: 100%;
+    text-align: center;
+    justify-content: center !important;
+  }
+}
+
+/* Small mobile: 2 buttons per row */
+@media (min-width: 391px) and (max-width: 480px) {
+  .cta-buttons-container {
+    gap: 10px;
+  }
+  
+  .cta-buttons-container a {
+    flex: 1 1 calc(50% - 5px);
+    min-width: 0;
+    text-align: center;
+    justify-content: center !important;
+  }
+  
+  .cta-buttons-container a:nth-child(3) {
+    flex: 1 1 100%;
+  }
+}
+
+/* Tablet and up: All buttons in one row */
+@media (min-width: 481px) {
+  .cta-buttons-container {
+    flex-direction: row;
+    flex-wrap: wrap;
+  }
+  
+  .cta-buttons-container a {
+    flex: 0 1 auto;
+  }
+}
