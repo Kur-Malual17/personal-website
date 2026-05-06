@@ -74,8 +74,8 @@ export default function ContactPage() {
               <div style={{ display: 'flex', alignItems: 'start', gap: '1rem' }}>
                 <div>
                   <p style={{ fontWeight: '600', color: '#000', marginBottom: '4px', fontSize: 'clamp(0.9375rem, 2vw, 1rem)' }}>Email</p>
-                  <a href="mailto:kurmalual@gmail.com" style={{ color: '#0066CC', textDecoration: 'none', fontSize: 'clamp(0.875rem, 2vw, 1rem)' }}>
-                    kurmalual@gmail.com
+                  <a href="mailto:majokdit711@gmail.com" style={{ color: '#0066CC', textDecoration: 'none', fontSize: 'clamp(0.875rem, 2vw, 1rem)' }}>
+                    majokdit711@gmail.com
                   </a>
                 </div>
               </div>

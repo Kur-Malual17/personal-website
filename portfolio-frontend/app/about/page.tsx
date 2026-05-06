@@ -21,8 +21,33 @@ function useDarkMode() {
   return isDark;
 }
 
+interface Profile {
+  id: number;
+  name: string;
+  resume?: string;
+}
+
 export default function AboutPage() {
   const isDark = useDarkMode();
+  const [profile, setProfile] = useState<Profile | null>(null);
+
+  useEffect(() => {
+    // Fetch profile data to get resume URL
+    async function fetchProfile() {
+      try {
+        const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/profile/`);
+        if (response.ok) {
+          const data = await response.json();
+          if (Array.isArray(data) && data.length > 0) {
+            setProfile(data[0]);
+          }
+        }
+      } catch (error) {
+        console.error('Error fetching profile:', error);
+      }
+    }
+    fetchProfile();
+  }, []);
   
   return (
     <main className="min-h-screen" style={{ paddingTop: 'clamp(100px, 12vw, 140px)', paddingBottom: 'clamp(40px, 6vw, 60px)', paddingLeft: 'clamp(24px, 5vw, 48px)', paddingRight: 'clamp(24px, 5vw, 48px)' }}>
@@ -336,7 +361,7 @@ export default function AboutPage() {
           marginBottom: 'clamp(24px, 4vw, 32px)'
         }}>
           <a
-            href="mailto:kurmalual@gmail.com"
+            href="mailto:majokdit711@gmail.com"
             style={{
               display: 'inline-block',
               padding: 'clamp(14px, 3vw, 18px) clamp(32px, 6vw, 48px)',
@@ -388,36 +413,38 @@ export default function AboutPage() {
             Let's Talk
           </a>
           
-          <a
-            href="https://personal-website-production-643f.up.railway.app/media/resume/Kur_Malual_Resume.pdf"
-            target="_blank"
-            rel="noopener noreferrer"
-            download
-            style={{
-              display: 'inline-flex',
-              alignItems: 'center',
-              gap: '8px',
-              padding: 'clamp(14px, 3vw, 18px) clamp(32px, 6vw, 48px)',
-              background: 'linear-gradient(135deg, #0066CC 0%, #0052A3 100%)',
-              color: '#FFFFFF',
-              borderRadius: '50px',
-              textDecoration: 'none',
-              fontWeight: '700',
-              fontSize: 'clamp(1rem, 2.5vw, 1.125rem)',
-              boxShadow: '0 10px 30px rgba(0, 102, 204, 0.3)',
-              transition: 'all 0.3s ease'
-            }}
-            onMouseOver={(e) => {
-              e.currentTarget.style.transform = 'translateY(-4px)';
-              e.currentTarget.style.boxShadow = '0 20px 40px rgba(0, 102, 204, 0.4)';
-            }}
-            onMouseOut={(e) => {
-              e.currentTarget.style.transform = 'translateY(0)';
-              e.currentTarget.style.boxShadow = '0 10px 30px rgba(0, 102, 204, 0.3)';
-            }}
-          >
-            <span style={{ fontSize: '1.25rem' }}>⬇</span> Resume
-          </a>
+          {profile?.resume && (
+            <a
+              href={profile.resume}
+              target="_blank"
+              rel="noopener noreferrer"
+              download
+              style={{
+                display: 'inline-flex',
+                alignItems: 'center',
+                gap: '8px',
+                padding: 'clamp(14px, 3vw, 18px) clamp(32px, 6vw, 48px)',
+                background: 'linear-gradient(135deg, #0066CC 0%, #0052A3 100%)',
+                color: '#FFFFFF',
+                borderRadius: '50px',
+                textDecoration: 'none',
+                fontWeight: '700',
+                fontSize: 'clamp(1rem, 2.5vw, 1.125rem)',
+                boxShadow: '0 10px 30px rgba(0, 102, 204, 0.3)',
+                transition: 'all 0.3s ease'
+              }}
+              onMouseOver={(e) => {
+                e.currentTarget.style.transform = 'translateY(-4px)';
+                e.currentTarget.style.boxShadow = '0 20px 40px rgba(0, 102, 204, 0.4)';
+              }}
+              onMouseOut={(e) => {
+                e.currentTarget.style.transform = 'translateY(0)';
+                e.currentTarget.style.boxShadow = '0 10px 30px rgba(0, 102, 204, 0.3)';
+              }}
+            >
+              <span style={{ fontSize: '1.25rem' }}>⬇</span> Resume
+            </a>
+          )}
         </div>
 
         {/* Social Media Icons */}

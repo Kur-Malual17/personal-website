@@ -361,7 +361,7 @@ export default function HomePage() {
               {/* CTA Buttons */}
               <div className="cta-buttons-container">
                 <a
-                  href="mailto:kurmalual@gmail.com"
+                  href="mailto:majokdit711@gmail.com"
                   style={{
                     padding: 'clamp(12px, 2.5vw, 14px) clamp(20px, 4vw, 32px)',
                     background: 'linear-gradient(135deg, #00D9FF 0%, #00A8E8 100%)',
@@ -1813,8 +1813,8 @@ export default function HomePage() {
               <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
                 <div>
                   <p style={{ fontWeight: '600', color: isDark ? '#FFFFFF' : '#1A1A1A', marginBottom: '8px' }}>Email</p>
-                  <a href="mailto:kurmalual@gmail.com" style={{ color: '#0066CC', textDecoration: 'none', fontSize: '1rem', fontWeight: isDark ? '800' : '400' }}>
-                    kurmalual@gmail.com
+                  <a href="mailto:majokdit711@gmail.com" style={{ color: '#0066CC', textDecoration: 'none', fontSize: '1rem', fontWeight: isDark ? '800' : '400' }}>
+                    majokdit711@gmail.com
                   </a>
                 </div>
                 <div>
