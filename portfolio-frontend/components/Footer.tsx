@@ -140,7 +140,7 @@ export default function Footer() {
             </h4>
             <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
               <a 
-                href="https://github.com" 
+                href="https://github.com/Kur-Malual17" 
                 target="_blank" 
                 rel="noopener noreferrer" 
                 style={{ 
@@ -154,7 +154,7 @@ export default function Footer() {
                 GitHub
               </a>
               <a 
-                href="https://linkedin.com" 
+                href="https://www.linkedin.com/in/k-malual" 
                 target="_blank" 
                 rel="noopener noreferrer" 
                 style={{ 
@@ -168,7 +168,7 @@ export default function Footer() {
                 LinkedIn
               </a>
               <a 
-                href="mailto:kurmalual@gmail.com" 
+                href="mailto:majokdit711@gmail.com" 
                 style={{ 
                   color: '#B0BEC5', 
                   fontSize: 'clamp(0.8125rem, 2vw, 0.875rem)',
