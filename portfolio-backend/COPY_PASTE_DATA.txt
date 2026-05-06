@@ -1,0 +1,71 @@
+=== PROJECT 1: SuddTech Company Website ===
+Title: SuddTech Company Website
+Description: Official website for SuddTech, a software company offering web, app, and digital product services.
+Category: Web
+Technologies: HTML, CSS, JavaScript
+GitHub URL: https://github.com/Kur-Malual17/SouthSudan-e-Services
+Live URL: https://suddtech.com
+Featured: YES
+Status: Live
+
+=== PROJECT 2: Digital School Management System (DSMS) ===
+Title: Digital School Management System (DSMS)
+Description: Enterprise school platform deployed in 3 secondary schools in Juba. Handles student registration, attendance, grading, fee management, teacher dashboards, and course registration. Works online and offline.
+Category: Systems
+Technologies: Django, PostgreSQL, JavaScript, REST APIs
+Live URL: https://suddtech.com
+Featured: YES
+Status: Live
+
+=== PROJECT 3: Eco-Adventure Tourism Platform ===
+Title: Eco-Adventure Tourism Platform
+Description: Travel booking platform for selecting destinations, reserving accommodations, and completing payments online.
+Category: Web
+Technologies: HTML, CSS, JavaScript, PHP
+Featured: NO
+Status: Completed
+
+=== PROJECT 4: Ashesi Market E-Commerce ===
+Title: Ashesi Market E-Commerce
+Description: Campus marketplace enabling student vendors to list products, accept payments, and allow peer-to-peer borrowing.
+Category: Web
+Technologies: React, Node.js, Database Management
+Featured: NO
+Status: Completed
+
+=== PROJECT 5: Agricultural Management Platform ===
+Title: Agricultural Management Platform
+Description: Connects farmers, equipment owners, transporters, and buyers on a single platform to reduce agricultural logistics disconnection.
+Category: Web
+Technologies: React, Django, CSS, MySQL
+Featured: NO
+Status: Completed
+
+=== PROJECT 6: SpeedyServe Food Delivery ===
+Title: SpeedyServe Food Delivery
+Description: Mobile app for ordering food from local restaurants with real-time delivery tracking and integrated payments.
+Category: Mobile
+Technologies: Flutter, Firebase, Dart
+Featured: NO
+Status: Completed
+
+=== PROJECT 7: Resume Screening AI App ===
+Title: Resume Screening AI App
+Description: Intelligent hiring tool using NLP and ML to match resumes to job descriptions and rank candidates by relevance.
+Category: AI
+Technologies: Python, Machine Learning, NLP, scikit-learn
+Featured: NO
+Status: Completed
+
+=== EXPERIENCE: SuddTech ===
+Role: Founder & CEO
+Company: SuddTech
+Location: Juba, South Sudan
+Start Date: 2024-01-01
+End Date: (leave blank)
+Description: Leading software development and digital strategy. Built DSMS deployed in 3 secondary schools in Juba, handling student registration, attendance, grading, and fee management. Achieved 40% improvement in administrative efficiency.
+Achievements: Deployed enterprise school platform used by 3 schools
+Reduced admin workload by 40% through automation
+Led team of developers in building scalable solutions
+Technologies: Django, PostgreSQL, JavaScript, REST APIs
+Is Leadership: YES
