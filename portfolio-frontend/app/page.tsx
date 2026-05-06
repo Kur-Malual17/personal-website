@@ -87,6 +87,7 @@ interface Profile {
   profile_image?: string;
   about_image?: string;
   journey_image?: string;
+  resume?: string;
   email: string;
   phone?: string;
   location?: string;
@@ -414,36 +415,41 @@ export default function HomePage() {
                 >
                   Let's Talk
                 </a>
-                <a
-                  href="/resume.pdf"
-                  style={{
-                    padding: 'clamp(12px, 2.5vw, 14px) clamp(20px, 4vw, 32px)',
-                    background: 'linear-gradient(135deg, #0066CC 0%, #0052A3 100%)',
-                    color: '#FFFFFF',
-                    borderRadius: '50px',
-                    fontWeight: '700',
-                    fontSize: 'clamp(0.875rem, 2vw, 1rem)',
-                    border: 'none',
-                    cursor: 'pointer',
-                    transition: 'all 0.3s ease',
-                    boxShadow: '0 10px 30px rgba(0, 102, 204, 0.3)',
-                    textDecoration: 'none',
-                    display: 'inline-flex',
-                    alignItems: 'center',
-                    gap: '8px',
-                    whiteSpace: 'nowrap'
-                  }}
-                  onMouseEnter={(e) => {
-                    e.currentTarget.style.transform = 'translateY(-4px)';
-                    e.currentTarget.style.boxShadow = '0 20px 40px rgba(0, 102, 204, 0.4)';
-                  }}
-                  onMouseLeave={(e) => {
-                    e.currentTarget.style.transform = 'translateY(0)';
-                    e.currentTarget.style.boxShadow = '0 10px 30px rgba(0, 102, 204, 0.3)';
-                  }}
-                >
-                  <span style={{ fontSize: 'clamp(1rem, 2.5vw, 1.25rem)' }}>⬇</span> Resume
-                </a>
+                {profile?.resume && (
+                  <a
+                    href={profile.resume}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    download
+                    style={{
+                      padding: 'clamp(12px, 2.5vw, 14px) clamp(20px, 4vw, 32px)',
+                      background: 'linear-gradient(135deg, #0066CC 0%, #0052A3 100%)',
+                      color: '#FFFFFF',
+                      borderRadius: '50px',
+                      fontWeight: '700',
+                      fontSize: 'clamp(0.875rem, 2vw, 1rem)',
+                      border: 'none',
+                      cursor: 'pointer',
+                      transition: 'all 0.3s ease',
+                      boxShadow: '0 10px 30px rgba(0, 102, 204, 0.3)',
+                      textDecoration: 'none',
+                      display: 'inline-flex',
+                      alignItems: 'center',
+                      gap: '8px',
+                      whiteSpace: 'nowrap'
+                    }}
+                    onMouseEnter={(e) => {
+                      e.currentTarget.style.transform = 'translateY(-4px)';
+                      e.currentTarget.style.boxShadow = '0 20px 40px rgba(0, 102, 204, 0.4)';
+                    }}
+                    onMouseLeave={(e) => {
+                      e.currentTarget.style.transform = 'translateY(0)';
+                      e.currentTarget.style.boxShadow = '0 10px 30px rgba(0, 102, 204, 0.3)';
+                    }}
+                  >
+                    <span style={{ fontSize: 'clamp(1rem, 2.5vw, 1.25rem)' }}>⬇</span> Resume
+                  </a>
+                )}
               </div>
 
               {/* Social Media Icons */}
