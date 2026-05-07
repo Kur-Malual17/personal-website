@@ -176,8 +176,8 @@ export default function HomePage() {
 
     const targets = {
       projects: 7,
-      schools: 3,
-      efficiency: 40,
+      schools: 6,
+      efficiency: 92.7,
       degrees: 2
     };
 
@@ -189,7 +189,7 @@ export default function HomePage() {
 
       setProjectsCount(Math.floor(targets.projects * progress));
       setSchoolsCount(Math.floor(targets.schools * progress));
-      setEfficiencyCount(Math.floor(targets.efficiency * progress));
+      setEfficiencyCount(Math.round(targets.efficiency * progress * 10) / 10);
       setDegreesCount(Math.floor(targets.degrees * progress));
 
       if (currentStep >= steps) {
